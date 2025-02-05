@@ -1,0 +1,34 @@
+{
+  "name": "reportportaltesting",
+  "version": "1.0.0",
+  "description": "Test Automation framework will be used for Report Portal testing",
+  "main": "index.js",
+  "scripts": {
+    "preui": "ts-node -r tsconfig-paths/register core/login-setup.ts",
+    "ui": "playwright test --ui",
+    "pretest": "ts-node -r tsconfig-paths/register core/login-setup.ts",
+    "test": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ausiankova-A/ReportPortalTesting.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ausiankova-A/ReportPortalTesting/issues"
+  },
+  "homepage": "https://github.com/Ausiankova-A/ReportPortalTesting#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.9",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "eslint": "^9.18.0",
+    "prettier": "^3.4.2"
+  }
+}
