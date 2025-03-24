@@ -6,11 +6,20 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  // reporter: "html",
+  reporter: [
+    ["list"], // Стандартный вывод в консоль
+    ["json", { outputFile: "results.json" }], // JSON-отчет
+    ["allure-playwright"], // Allure-репортер
+  ],
   use: {
-    trace: 'on-first-retry',
-    storageState: 'state.json', 
+    trace: 'on',
+    screenshot: "on", 
   },
+  // use: {
+  //   trace: 'on-first-retry',
+  //   storageState: 'state.json', 
+  // },
 
   projects: [
     {

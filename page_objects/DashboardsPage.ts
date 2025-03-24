@@ -1,4 +1,4 @@
-import { BasePage } from '@core/basePage';
+import { BasePage } from '@core/ui/basePage';
 import { AddNewDashboard } from '@pages/AddNewDashboard';
 
 export class DashboardsPage extends BasePage{
