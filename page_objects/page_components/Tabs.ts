@@ -1,4 +1,4 @@
-import { BasePage } from '@core/basePage';
+import { BasePage } from '@core/ui/basePage';
 
 export class Tabs extends BasePage{
     dashboards = this.page.locator(`.sidebarButton__sidebar-nav-btn--gbV_N a[href="#sap-saas/dashboard"]`);
