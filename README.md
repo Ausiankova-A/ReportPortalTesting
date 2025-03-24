@@ -1,2 +1,2 @@
 # ReportPortalTesting
-Test Automation framework will be used for Report Portal testing. Test
+Test Automation framework will be used for Report Portal testing.
