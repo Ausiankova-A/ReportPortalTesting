@@ -15,11 +15,8 @@ export default defineConfig({
   use: {
     trace: 'on',
     screenshot: 'on', 
+    storageState: 'state.json', 
   },
-  // use: {
-  //   trace: 'on-first-retry',
-  //   storageState: 'state.json', 
-  // },
 
   projects: [
     {
