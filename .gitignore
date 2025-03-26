@@ -6,3 +6,5 @@ node_modules/
 /playwright/.cache/
 .env
 state.json
+allure-results/
+results.json

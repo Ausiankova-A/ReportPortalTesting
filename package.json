@@ -7,7 +7,8 @@
     "preui": "ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
     "ui": "playwright test --ui",
     "pretest": "ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
-    "test": "playwright test"
+    "test": "playwright test",
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "repository": {
     "type": "git",
@@ -22,15 +23,18 @@
   "devDependencies": {
     "@playwright/test": "^1.51.1",
     "@types/node": "^22.10.9",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
     "allure-playwright": "^3.2.0",
+    "eslint": "^9.23.0",
+    "eslint-config-prettier": "^10.1.1",
+    "prettier": "^3.5.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3"
   },
   "dependencies": {
     "dotenv": "^16.4.7",
-    "eslint": "^9.18.0",
-    "prettier": "^3.4.2",
     "winston": "^3.17.0"
   }
 }

@@ -5,10 +5,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export class LoginPage extends BasePage{
-    loginForm = this.page.locator(`.loginForm__login-form--UYW8B`);
-    loginField = this.page.locator(`input[name=login]`);
-    passwordField = this.page.locator(`input[name=password]`);
-    loginButton = this.page.locator(`xpath=.//button[text()="Login"]`);
+    loginForm = this.page.locator('.loginForm__login-form--UYW8B');
+    loginField = this.page.locator('input[name=login]');
+    passwordField = this.page.locator('input[name=password]');
+    loginButton = this.page.locator('xpath=.//button[text()="Login"]');
 
     async login() {
         await expect(this.loginForm).toBeVisible();
