@@ -15,7 +15,7 @@ test.describe('User adds new dashboard', () => {
       });
 
       await test.step('click Add New Dashboard', async () => {
-        await dashboardsPage.addNewDashboardButton.click();
+        await dashboardsPage.addNewDashboardButton.first().click();
         await expect(dashboardsPage.addNewDashboard.nameField).toBeVisible();
       });
 
