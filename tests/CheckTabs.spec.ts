@@ -1,5 +1,5 @@
 import { expect } from '@playwright/test';
-import test from '@core/fixtures';
+import test from '@core/configuration/fixtures';
 
 test.describe('User check that tabs are openning', () => {
 
