@@ -4,9 +4,9 @@
   "description": "Test Automation framework will be used for Report Portal testing",
   "main": "index.js",
   "scripts": {
-    "preui": "ts-node -r tsconfig-paths/register core/login-setup.ts",
+    "preui": "ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
     "ui": "playwright test --ui",
-    "pretest": "ts-node -r tsconfig-paths/register core/login-setup.ts",
+    "pretest": "ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
     "test": "playwright test"
   },
   "repository": {
