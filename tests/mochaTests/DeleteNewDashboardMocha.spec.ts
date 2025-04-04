@@ -8,6 +8,7 @@ dotenv.config();
 
 describe('Deliting existing Dashboard', () => {
   let pageFactory: PageFactory;
+  const dashboardName = `ForDeletion-${Date.now()}`;
 
   beforeEach(async () => {
     const page = getPage(); 
@@ -19,17 +20,17 @@ describe('Deliting existing Dashboard', () => {
   });
 
   it('User is able to delete a dashboard',async () => {
-    await pageFactory.reportPortal.tabs.dashboards.click()
+    await pageFactory.reportPortal.tabs.dashboards.click();
     await expect(pageFactory.dashboardsPage.title).toBeVisible();
     await pageFactory.dashboardsPage.addNewDashboardButton.first().click();
     await expect(pageFactory.dashboardsPage.addNewDashboard.nameField).toBeVisible();
-    await pageFactory.dashboardsPage.addNewDashboard.nameField.fill('ForDeleting');
+    await pageFactory.dashboardsPage.addNewDashboard.nameField.fill(dashboardName);
     await pageFactory.dashboardsPage.addNewDashboard.addButton.click();
     await expect(pageFactory.dashboardsPage.addNewDashboard.addNewWidgetButton).toBeVisible();
-    await pageFactory.reportPortal.tabs.dashboards.click()
-    await expect(pageFactory.dashboardsPage.tableName.filter({ hasText: "ForDeleting" })).toBeVisible();
-    await pageFactory.dashboardsPage.tableRow.filter({ hasText: "ForDeleting" }).deleteDashboard.click();
+    await pageFactory.reportPortal.tabs.dashboards.click();
+    await expect(pageFactory.dashboardsPage.tableName.filter({ hasText: dashboardName })).toBeVisible();
+    await pageFactory.dashboardsPage.tableRow.filter({ hasText: dashboardName }).deleteDashboard.click();
     await pageFactory.dashboardsPage.deleteconfirmation.click();
-    await expect(pageFactory.dashboardsPage.tableName.filter({ hasText: "ForDeleting" })).toBeHidden();
+    await expect(pageFactory.dashboardsPage.tableName.filter({ hasText: dashboardName })).toBeHidden();
     });
   });

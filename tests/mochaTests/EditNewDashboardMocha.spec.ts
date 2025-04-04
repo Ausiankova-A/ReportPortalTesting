@@ -19,13 +19,13 @@ describe('Edit existing Dashboard', () => {
   });
 
   it('User is able to edit a dashboard',async () => {
-    await pageFactory.reportPortal.tabs.dashboards.click()
+    await pageFactory.reportPortal.tabs.dashboards.click();
     await expect(pageFactory.dashboardsPage.title).toBeVisible();
-    await expect(pageFactory.dashboardsPage.tableName.filter({ hasText: "DEMO DASHBOARD" })).toBeVisible();
-    await pageFactory.dashboardsPage.tableRow.filter({ hasText: "DEMO DASHBOARD" }).editDashboard.click();
+    await expect(pageFactory.dashboardsPage.tableName.filter({ hasText: 'DEMO DASHBOARD' })).toBeVisible();
+    await pageFactory.dashboardsPage.tableRow.filter({ hasText: 'DEMO DASHBOARD' }).editDashboard.click();
     await pageFactory.dashboardsPage.addNewDashboard.descriptionField.clear();
     await pageFactory.dashboardsPage.addNewDashboard.descriptionField.fill('DEMO DASHBOARD description');
     await pageFactory.dashboardsPage.addNewDashboard.updateButton.click();
-    await expect(pageFactory.dashboardsPage.tableDesciption.filter({ hasText: "DEMO DASHBOARD description" })).toBeVisible();
+    await expect(pageFactory.dashboardsPage.tableDesciption.filter({ hasText: 'DEMO DASHBOARD description' })).toBeVisible();
     });
   });

@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "preui": "ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
-    "ui": "playwright test --ui",
+    "ui": "npx playwright test --ui",
     "pretest": "ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
-    "test": "playwright test",
+    "test": "npx playwright test",
     "test-mocha": "cross-env MOCHA_THREADS=%MOCHA_THREADS% npx mocha --require ts-node/register --require tsconfig-paths/register --timeout 10000 --parallel --jobs %MOCHA_THREADS% \"tests/mochaTests/*.spec.ts\"",
     "lint": "eslint . --ext .ts,.tsx"
   },

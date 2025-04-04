@@ -1,5 +1,5 @@
 import { chromium, Browser, Page, BrowserContext } from 'playwright';
-import { LoginPage } from '@pages/LoginPage'
+import { LoginPage } from '@pages/LoginPage';
 
 import dotenv from 'dotenv';
 

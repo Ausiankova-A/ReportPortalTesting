@@ -8,6 +8,7 @@ dotenv.config();
 
 describe('Adding New Dashboard', () => {
   let pageFactory: PageFactory;
+  const dashboardName = `Test-${Date.now()}`;
 
   beforeEach(async () => {
     const page = getPage(); 
@@ -19,15 +20,15 @@ describe('Adding New Dashboard', () => {
   });
 
   it('User is able to create a dashboard',async () => {
-    await pageFactory.reportPortal.tabs.dashboards.click()
+    await pageFactory.reportPortal.tabs.dashboards.click();
     await expect(pageFactory.dashboardsPage.title).toBeVisible();
     await pageFactory.dashboardsPage.addNewDashboardButton.first().click();
     await expect(pageFactory.dashboardsPage.addNewDashboard.nameField).toBeVisible();
-    await pageFactory.dashboardsPage.addNewDashboard.nameField.fill('Test');
+    await pageFactory.dashboardsPage.addNewDashboard.nameField.fill(dashboardName);
     await pageFactory.dashboardsPage.addNewDashboard.descriptionField.fill('Test description');
     await pageFactory.dashboardsPage.addNewDashboard.addButton.click();
     await expect(pageFactory.dashboardsPage.addNewDashboard.addNewWidgetButton).toBeVisible();
-    await pageFactory.reportPortal.tabs.dashboards.click()
-    await expect(pageFactory.dashboardsPage.tableName.filter({ hasText: "Test" })).toBeVisible();
+    await pageFactory.reportPortal.tabs.dashboards.click();
+    await expect(pageFactory.dashboardsPage.tableName.filter({ hasText: dashboardName })).toBeVisible();
     });
   });
