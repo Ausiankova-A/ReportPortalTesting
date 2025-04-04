@@ -2,8 +2,12 @@ import { expect } from '@playwright/test';
 import test from '@core/configuration/fixtures';
 
 test.describe('User adds new dashboard', () => {
+  const dashboardName = `Test-${Date.now()}`;
   
   test.beforeEach(async ({ page}) => {
+    if (!process.env.REPORT_PORTAL_URL) {
+      throw new Error('Environment variable REPORT_PORTAL_URL is not set');
+  }
     await page.goto(process.env.REPORT_PORTAL_URL);
   });
   
@@ -20,7 +24,7 @@ test.describe('User adds new dashboard', () => {
       });
 
       await test.step('Fill Name field', async () => {
-        await dashboardsPage.addNewDashboard.nameField.fill('Test');
+        await dashboardsPage.addNewDashboard.nameField.fill(dashboardName);
       });
 
       await test.step('Fill Description field', async () => {

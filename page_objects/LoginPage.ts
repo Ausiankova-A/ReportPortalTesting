@@ -11,6 +11,9 @@ export class LoginPage extends BasePage{
     loginButton = this.page.locator('xpath=.//button[text()="Login"]');
 
     async login() {
+        if (!process.env.LOGIN || !process.env.PASSWORD) {
+            throw new Error('Environment variable LOGIN and PASSWORD is not set');
+        }
         await expect(this.loginForm).toBeVisible();
         await this.loginField.fill(process.env.LOGIN);
         await this.passwordField.fill(process.env.PASSWORD);

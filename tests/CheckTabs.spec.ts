@@ -4,6 +4,9 @@ import test from '@core/configuration/fixtures';
 test.describe('User check that tabs are openning', () => {
 
   test.beforeEach(async ({ page}) => {
+    if (!process.env.REPORT_PORTAL_URL) {
+      throw new Error('Environment variable REPORT_PORTAL_URL is not set');
+  }
     await page.goto(process.env.REPORT_PORTAL_URL);
   });
   
