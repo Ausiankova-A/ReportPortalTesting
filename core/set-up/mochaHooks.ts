@@ -43,14 +43,14 @@ beforeEach(async function () {
 afterEach(async function () {
   if (page) {
     await page.close();
-    logger.info(`Page is closed`);
+    logger.info('Page is closed');
   }
 });
 
 after(async function () {
   if (browser) {
     await browser.close(); 
-    logger.info(`Browser is closed`);
+    logger.info('Browser is closed');
   }
 });
 
