@@ -1,5 +1,6 @@
-import { BasePage } from '@core/ui/basePage';
+import { BasePage } from '@core/set-up/basePage';
 import { expect } from '@playwright/test';
+import { logger } from '@core/utils/logger';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -19,5 +20,6 @@ export class LoginPage extends BasePage{
         await this.passwordField.fill(process.env.PASSWORD);
         await this.loginButton.click();
         await expect(this.loginForm).toBeHidden();
+        logger.info(`User ${process.env.LOGIN} is logged in`);
     } 
     }

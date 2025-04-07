@@ -1,6 +1,6 @@
-import { BasePage } from '@core/ui/basePage';
+import { BasePage } from '@core/set-up/basePage';
 import { AddNewDashboard } from '@pages/AddNewDashboard';
-import { collection } from '@core/configuration/collection';
+import { collection } from '@pages/baseInterface/collection';
 
 export class DashboardsPage extends BasePage{
     title = this.page.locator('span[title="All Dashboards"]');

@@ -3,7 +3,7 @@
       "baseUrl": ".", 
       "paths": {
         "@core/*": ["core/*"],
-        "@core/ui/*": ["core/ui/*"], 
+        "@core/set-up/*": ["core/set-up/*"], 
         "@core/configuration/*": ["core/configuration/*"], 
         "@pages/*": ["page_objects/*"]
       },
@@ -19,7 +19,7 @@
     "include": [
     "core/**/*",
     "tests/*.ts",
-    "src/**/*.ts" ],
+    "src/**/*.ts", "page_objects/baseInterface/collection.ts" ],
   "exclude": ["node_modules"]
   }
   

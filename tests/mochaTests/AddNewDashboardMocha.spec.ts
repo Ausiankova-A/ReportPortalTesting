@@ -1,25 +1,12 @@
 import { expect } from '@playwright/test';
-import { getPage } from '@core/ui/mochaHooks';
-import { PageFactory } from '@pages/PageFactory';
+import { getPageFactory } from '@core/set-up/mochaHooks';
 
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-describe('Adding New Dashboard', () => {
-  let pageFactory: PageFactory;
+describe('Adding New Dashboard', () => { 
   const dashboardName = `Test-${Date.now()}`;
-
-  beforeEach(async () => {
-    const page = getPage(); 
-    pageFactory = new PageFactory(page); 
-    if (!process.env.REPORT_PORTAL_URL) {
-      throw new Error('Environment variable REPORT_PORTAL_URL is not set');
-    }
-    await page.goto(process.env.REPORT_PORTAL_URL);
-  });
-
+  
   it('User is able to create a dashboard',async () => {
+    const pageFactory = getPageFactory(); 
+
     await pageFactory.reportPortal.tabs.dashboards.click();
     await expect(pageFactory.dashboardsPage.title).toBeVisible();
     await pageFactory.dashboardsPage.addNewDashboardButton.first().click();
