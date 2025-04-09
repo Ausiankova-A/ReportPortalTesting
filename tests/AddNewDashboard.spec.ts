@@ -3,14 +3,6 @@ import test from '@core/configuration/fixtures';
 
 test.describe('User adds new dashboard', () => {
   const dashboardName = `Test-${Date.now()}`;
-  
-  test.beforeEach(async ({ page}) => {
-    if (!process.env.REPORT_PORTAL_URL) {
-      throw new Error('Environment variable REPORT_PORTAL_URL is not set');
-  }
-    await page.goto(process.env.REPORT_PORTAL_URL);
-  });
-  
     test('Adding new dashboard', async ({ reportPortal, dashboardsPage}) => {
 
       await test.step('open Dashboard tab', async () => {

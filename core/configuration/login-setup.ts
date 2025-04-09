@@ -1,5 +1,6 @@
 const { chromium } = require('playwright'); 
 import { ReportPortal } from '@pages/reportPortal';
+import { logger } from '@core/utils/logger';
 
 export async function loginSetup() {
     const browser = await chromium.launch();
@@ -10,6 +11,7 @@ export async function loginSetup() {
     await page.goto(process.env.REPORT_PORTAL_URL);
     await reportPortal.loginPage.login();
     await page.context().storageState({ path: 'state.json' });
+    logger.info('State is stored');
   
     await page.close();
     await context.close();

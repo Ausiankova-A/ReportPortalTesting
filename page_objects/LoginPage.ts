@@ -1,4 +1,4 @@
-import { BasePage } from '@core/set-up/basePage';
+import { BasePage } from '@pages/baseInterface/basePage';
 import { expect } from '@playwright/test';
 import { logger } from '@core/utils/logger';
 import dotenv from 'dotenv';

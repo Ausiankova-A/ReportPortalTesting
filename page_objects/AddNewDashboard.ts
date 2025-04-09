@@ -1,4 +1,4 @@
-import { BasePage } from '@core/set-up/basePage';
+import { BasePage } from '@pages/baseInterface/basePage';
 
 export class AddNewDashboard extends BasePage{
     nameField = this.page.locator('input[placeholder="Enter dashboard name"]');

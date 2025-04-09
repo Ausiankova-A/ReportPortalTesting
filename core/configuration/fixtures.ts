@@ -18,6 +18,14 @@ type ReportPortalFixtures = {
 }
 
 const test = baseTest.extend<ReportPortalFixtures>({
+    page: async ({ page }, use) => {
+        if (!process.env.REPORT_PORTAL_URL) {
+          throw new Error('Environment variable REPORT_PORTAL_URL is not set');
+        }
+        await page.goto(process.env.REPORT_PORTAL_URL);
+        await use(page); 
+      },
+
     reportPortal: async ({ page }, use) => {
         const reportPortal = new ReportPortal(page);
         await use(reportPortal);

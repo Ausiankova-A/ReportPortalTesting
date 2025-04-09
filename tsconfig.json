@@ -19,7 +19,7 @@
     "include": [
     "core/**/*",
     "tests/*.ts",
-    "src/**/*.ts", "page_objects/baseInterface/collection.ts" ],
+    "src/**/*.ts", "page_objects/baseInterface/collection.ts", "page_objects/baseInterface/basePage.ts" ],
   "exclude": ["node_modules"]
   }
   

@@ -1,4 +1,4 @@
-import { BasePage } from '@core/set-up/basePage';
+import { BasePage } from '@pages/baseInterface/basePage';
 import { AddNewDashboard } from '@pages/AddNewDashboard';
 import { collection } from '@pages/baseInterface/collection';
 

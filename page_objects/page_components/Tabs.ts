@@ -1,4 +1,4 @@
-import { BasePage } from '@core/set-up/basePage';
+import { BasePage } from '@pages/baseInterface/basePage';
 
 export class Tabs extends BasePage{
     dashboards = this.page.locator('.sidebarButton__sidebar-nav-btn--gbV_N a[href="#default_personal/dashboard"]');
