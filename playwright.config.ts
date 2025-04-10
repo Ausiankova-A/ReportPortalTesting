@@ -6,11 +6,10 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  // reporter: 'html',
   reporter: [
-    ['list'], // Стандартный вывод в консоль
-    ['json', { outputFile: 'results.json' }], // JSON-отчет
-    ['allure-playwright'], // Allure-репортер
+    ['list'], 
+    ['json', { outputFile: 'results.json' }], 
+    ['allure-playwright'],
   ],
   use: {
     trace: 'on',

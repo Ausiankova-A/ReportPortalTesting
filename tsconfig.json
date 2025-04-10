@@ -3,14 +3,23 @@
       "baseUrl": ".", 
       "paths": {
         "@core/*": ["core/*"],
+        "@core/set-up/*": ["core/set-up/*"], 
+        "@core/configuration/*": ["core/configuration/*"], 
         "@pages/*": ["page_objects/*"]
       },
+      "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
      "module": "commonjs",
     "esModuleInterop": true,
-    "target": "es6"
+    "target": "ES6",
+    "outDir": "./dist",
+    "types": ["mocha", "node", "chai"]
     },
     "include": [
-    "core/**/*"
-  ]
+    "core/**/*",
+    "tests/*.ts",
+    "src/**/*.ts", "page_objects/baseInterface/collection.ts", "page_objects/baseInterface/basePage.ts" ],
+  "exclude": ["node_modules"]
   }
   

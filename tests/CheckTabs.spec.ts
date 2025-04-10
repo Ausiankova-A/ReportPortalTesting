@@ -2,11 +2,6 @@ import { expect } from '@playwright/test';
 import test from '@core/configuration/fixtures';
 
 test.describe('User check that tabs are openning', () => {
-
-  test.beforeEach(async ({ page}) => {
-    await page.goto(process.env.REPORT_PORTAL_URL);
-  });
-  
     test('Check tabs', async ({ reportPortal, dashboardsPage, launchesPage, filtersPage, debugPage, projectMembersPage, projectSettingsPage }) => {
 
       await test.step('open Dashboard tab', async () => {

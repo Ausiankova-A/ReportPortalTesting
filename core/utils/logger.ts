@@ -1,17 +1,15 @@
 import winston from 'winston';
 
-const logger = winston.createLogger({
+export const logger = winston.createLogger({
   level: 'info',
   format: winston.format.combine(
-    winston.format.timestamp(),
+    winston.format.timestamp({ format: 'HH:mm:ss' }),
     winston.format.printf(({ timestamp, level, message }) => 
       `${timestamp} [${level.toUpperCase()}]: ${message}`
     )
   ),
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: 'logs/framework.log' }) // Лог в файл
+    new winston.transports.File({ filename: 'logs/framework.log' }) 
   ]
 });
-
-export default logger;

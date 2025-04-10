@@ -1,4 +1,4 @@
-import { BasePage } from '@core/ui/basePage';
+import { BasePage } from '@pages/baseInterface/basePage';
 import { LoginPage } from '@pages/LoginPage';
 import { Tabs } from '@pages/page_components/Tabs';
 

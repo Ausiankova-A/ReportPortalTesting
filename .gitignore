@@ -8,3 +8,4 @@ node_modules/
 state.json
 allure-results/
 results.json
+logs/
