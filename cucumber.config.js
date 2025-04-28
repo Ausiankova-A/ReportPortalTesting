@@ -1,3 +1,7 @@
+require('dotenv').config();
+
+const parallelCount = process.env.CUCUMBER_PARALLEL ? parseInt(process.env.CUCUMBER_PARALLEL, 10) : 1;
+
 module.exports = {
     default: {
         requireModule: ['ts-node/register', 'tsconfig-paths/register'],
@@ -8,6 +12,6 @@ module.exports = {
             './core/configuration/parameterTypes.ts',
         ],
         strict: true,
-        parallel: 3,
+        parallel: parallelCount,
     },
 };

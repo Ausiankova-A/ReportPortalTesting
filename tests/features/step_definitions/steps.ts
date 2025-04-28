@@ -62,14 +62,11 @@ Then('I expect element {locator} with text {text} is hidden', async function (lo
       const rawValue = expectedData[key];
       expectedData[key] = this.testData[rawValue] ?? rawValue;
     }
-  
-    const nameLocator = this.page.locator('[class*="dashboardTable__name"]');
-    const descLocator = this.page.locator('[class*="dashboardTable__description"]');
-  
+
     if (expectedData.Name) {
-      await expect(nameLocator.filter({ hasText: expectedData.Name })).toBeVisible();
+      await expect(this.pageFactory.dashboardsPage.tableName.filter({ hasText: expectedData.Name })).toBeVisible();
     }
-    if (expectedData.Description) {
-      await expect(descLocator.filter({ hasText: expectedData.Description })).toBeVisible();
+   if (expectedData.Description) {
+      await expect(this.pageFactory.dashboardsPage.tableDesciption.filter({ hasText: expectedData.Description })).toBeVisible();
     }
   });
