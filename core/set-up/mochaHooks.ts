@@ -34,9 +34,10 @@ afterEach(async function () {
     await page.close();
     logger.info('Page is closed');
   }
-});
-
-after(async function () {
+  if (context) {
+    await context.close();
+    logger.info('Page is closed');
+  }
   if (browser) {
     await browser.close(); 
     logger.info('Browser is closed');

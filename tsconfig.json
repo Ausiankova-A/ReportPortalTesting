@@ -19,7 +19,7 @@
     "include": [
     "core/**/*",
     "tests/*.ts",
-    "src/**/*.ts", "page_objects/baseInterface/collection.ts", "page_objects/baseInterface/basePage.ts" ],
+    "src/**/*.ts", "page_objects/baseInterface/collection.ts", "page_objects/baseInterface/basePage.ts", "tests/playwrightTests/CheckTabs.spec.ts", "tests/playwrightTests/AddNewDashboard.spec.ts" ],
   "exclude": ["node_modules"]
   }
   
