@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "preui": "ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
-    "ui": "npx playwright test --ui",
+    "ui": "npx playwright test --project=playwrightTests --ui",
     "pretest": "ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
-    "test": "npx playwright test",
+    "test": "npx playwright test --project=playwrightTests",
     "test-mocha": "cross-env MOCHA_THREADS=%MOCHA_THREADS% npx mocha --require ts-node/register --require tsconfig-paths/register --timeout 10000 --parallel --jobs %MOCHA_THREADS% \"tests/mochaTests/*.spec.ts\"",
     "lint": "eslint . --ext .ts,.tsx",
     "test-cucumber": "cucumber-js --config cucumber.config.js",
-    "api": "npx mocha tests/api/*.spec.ts"
+    "api": "npx playwright test --project=api"
   },
   "repository": {
     "type": "git",

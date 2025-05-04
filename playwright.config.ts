@@ -19,10 +19,21 @@ export default defineConfig({
 
   projects: [
     {
-      name: 'chromium',
+      // name: 'chromium',
+      name: 'playwrightTests',  // Название проекта для UI/API тестов
+      testDir: './tests/playwrightTests',
       use: { ...devices['Desktop Chrome'],
         headless: false,
        },
+    },
+
+    {
+      name: 'api',  // Название проекта для API тестов
+      testDir: './tests/api',  // Папка для API тестов
+      // use: {
+      //   baseURL: 'https://api.example.com',  // Базовый URL для API тестов
+      //   // Другие настройки, специфичные для API тестов
+      // },
     },
   ],
 
