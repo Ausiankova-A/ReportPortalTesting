@@ -10,7 +10,7 @@ interface FilterOptions {
     hasText?: string | RegExp;
 }
 
-class Collection<T> {
+export class Collection<T> {
     constructor(
         public locator: Locator,
         public itemClass: ItemClass<T>,
