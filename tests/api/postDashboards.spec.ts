@@ -52,6 +52,6 @@ test('Create dashboard - Negative: duplicate name', async () => {
   
     const body = await res.json();
     expect(body).toHaveProperty('message');
-    expect(body.message).toContain(`Resource 'DEMO DASHBOARD' already exists. You couldn't create the duplicate.`);
+    expect(body.message).toContain('Resource \'DEMO DASHBOARD\' already exists. You couldn\'t create the duplicate.');
   });
 });
