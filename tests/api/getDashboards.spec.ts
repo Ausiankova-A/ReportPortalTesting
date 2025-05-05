@@ -1,23 +1,17 @@
-import { test, expect } from '@playwright/test';
-import { DashboardAPI } from 'core/api/dashboardApi';
+import { test, expect } from 'core/api/apiHooks';
 import type { DashboardResponse } from 'core/api/models/dashboard.dto';
-import { getAuthToken } from 'core/api/auth';
+import dotenv from 'dotenv';
+dotenv.config();
 
 test.describe('Dashboards API - GET', () => {
-    let dashboardApi: DashboardAPI;
-    const project = 'default_personal'; 
+    const project = process.env.DASHBOARD_NAME; 
 
-  test.beforeAll(async () => {
-    const token = await getAuthToken(); 
-    dashboardApi = new DashboardAPI(token); 
-  });
-
-  test('GET all dashboards - Positive', async () => {
-    const res = await dashboardApi.getAllDashboards(project);
+  test('GET all dashboards - Positive', async ({ dashboardApi }) => {
+    const response = await dashboardApi.getAllDashboards(project);
     
-    expect(res.status()).toBe(200);
+    expect(response.status).toBe(200);
 
-    const body: DashboardResponse = await res.json();
+    const body: DashboardResponse = await response.data;
     
     expect(Array.isArray(body.content)).toBe(true);
     expect(body.content.length).toBeGreaterThan(0);
@@ -26,16 +20,17 @@ test.describe('Dashboards API - GET', () => {
     expect(first).toHaveProperty('id');
     expect(first).toHaveProperty('owner');
     expect(first).toHaveProperty('widgets');
+    
   });
 
-  test('GET non-existent dashboard - Negative', async () => {
+  test('GET non-existent dashboard - Negative', async ({ dashboardApi }) => {
     const nonExistentDashboardId = '123321'; 
 
-    const res = await dashboardApi.getDashboardById(project, nonExistentDashboardId);
+    const response = await dashboardApi.getDashboardById(project, nonExistentDashboardId);
 
-    expect(res.status()).toBe(404);
+    expect(response.status).toBe(404);
 
-    const body = await res.json();
+    const body = await response.data;
     expect(body).toHaveProperty('message');
     expect(body.message).toContain(`Dashboard with ID '${nonExistentDashboardId}' not found on project '${project}'. Did you use correct Dashboard ID?`);
   });

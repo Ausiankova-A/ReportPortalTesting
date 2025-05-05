@@ -1,5 +1,7 @@
-import { APIClient } from './apiClient';
+import { AxiosClient } from '@core/api/clients/AxiosClient';
 import dotenv from 'dotenv';
+import { IApiClient } from '@core/api/interfaces/IApiClient';
+import { PlaywrightClient } from '@core/api/clients/PlaywrightClient';
 
 dotenv.config();
 
@@ -12,28 +14,57 @@ export async function getAuthToken(): Promise<string> {
     throw new Error('One of required .env values (REPORT_PORTAL_URL, LOGIN, PASSWORD) is missing');
   }
 
-  const client = new APIClient(baseURL);
+  const clientType = process.env.API_CLIENT || 'playwright';
+  let client: IApiClient;
+
+  switch (clientType) {
+    case 'axios':
+      client = new AxiosClient(baseURL);
+      break;
+    case 'playwright':
+    default:
+      client = new PlaywrightClient(baseURL);
+      break;
+  }
 
   const body = new URLSearchParams();
   body.append('grant_type', 'password');
   body.append('username', username);
   body.append('password', password);
 
-
-  const response = await client.post('/uat/sso/oauth/token', body.toString(), {
+  const headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
-    'Authorization': 'Basic dWk6dWltYW4=',
-  });
+    'Authorization': 'Basic dWk6dWltYW4=', 
+  };
 
-  if (!response.ok()) {
-    throw new Error(`Login failed: ${response.status()}`);
+  try {
+    const response = await client.post('/uat/sso/oauth/token', body.toString(), headers);
+
+    let statusCode: number;
+
+  if (typeof response.status === 'function') {
+    // Playwright
+    statusCode = response.status();
+  } else {
+    // Axios
+    statusCode = response.status;
   }
 
-  const responseBody = await response.json();
-
-  if (!responseBody.access_token) {
-    throw new Error('No access_token received in login response');
+  if (statusCode !== 200) {
+    throw new Error(`Login failed: ${statusCode}`);
   }
 
-  return responseBody.access_token;
+    const responseBody = typeof response.json === 'function' 
+      ? await response.json() 
+      : response.data; 
+
+    if (!responseBody.access_token) {
+      throw new Error('No access_token received in login response');
+    }
+
+    return responseBody.access_token;
+  } catch (error) {
+    console.error('Error during token request:', error);
+    throw new Error('Authentication failed');
+  }
 }

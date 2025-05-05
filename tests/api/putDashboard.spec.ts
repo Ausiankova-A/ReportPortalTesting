@@ -1,55 +1,54 @@
-import { test, expect } from '@playwright/test';
-import { DashboardAPI } from 'core/api/dashboardApi';
-import { getAuthToken } from 'core/api/auth';
+import { test, expect } from 'core/api/apiHooks';
+import type { UpdateDashboardPayload, AddWidgetPayload } from 'core/api/models/dashboard.dto';
+import dotenv from 'dotenv';
+dotenv.config();
 
 test.describe('Dashboards API - PUT', () => {
-    let dashboardApi: DashboardAPI;
-    const project = 'default_personal';
+    const project = process.env.DASHBOARD_NAME;
+    const dashboardName = `put-test-${Date.now()}`;
     let dashboardId: number;
 
-  test.beforeAll(async () => {
-    const token = await getAuthToken(); 
-    dashboardApi = new DashboardAPI(token); 
+  test.beforeAll(async ({ dashboardApi }) => {
 
-    const createRes = await dashboardApi.createDashboard(project, {
-        name: 'put test',
+    const testDashboard = await dashboardApi.createDashboard(project, {
+        name: dashboardName,
         description: 'initial description'
       });
-      const createBody = await createRes.json();
+      const createBody = await testDashboard.data;
       dashboardId = createBody.id;
     });
 
-  test('Positive: Successfully updates a dashboard', async () => {
-    const updatePayload = {
-      name: 'update-test',
+  test('Positive: Successfully updates a dashboard', async ({ dashboardApi }) => {
+    const updatePayload: UpdateDashboardPayload = {
+      name: `update-test-${Date.now()}`,
       description: 'updated description'
     };
 
-    const res = await dashboardApi.updateDashboard(project, dashboardId, updatePayload);
+    const response = await dashboardApi.updateDashboard(project, dashboardId, updatePayload);
 
-    expect(res.status()).toBe(200);
-    const body = await res.json();
+    expect(response.status).toBe(200);
+    const body = await response.data;
     expect(body.message).toContain(`Dashboard with ID = '${dashboardId}' successfully updated`);
   });
 
-test('Negative: Update non-existent dashboard ID', async () => {
+test('Negative: Update non-existent dashboard ID', async ({ dashboardApi }) => {
     const nonExistentId = 999999;
-    const payload = { 
+    const payload: UpdateDashboardPayload = { 
         name: 'non-existent', 
         description: 'should fail' 
     };
   
-    const res = await dashboardApi.updateDashboard(project, nonExistentId, payload);
+    const response = await dashboardApi.updateDashboard(project, nonExistentId, payload);
   
-    expect(res.status()).toBe(404);
+    expect(response.status).toBe(404);
   
-    const body = await res.json();
+    const body = await response.data;
     expect(body.message).toContain(`Dashboard with ID '${nonExistentId}' not found on project '${project}'`);
   });
 
-test('Negative: Add widget to non-existent dashboard', async () => {
+test('Negative: Add widget to non-existent dashboard', async ({ dashboardApi }) => {
     const nonExistentId = 987654;
-    const widgetPayload = {
+    const widgetPayload: AddWidgetPayload = {
         addWidget: {
         widgetId: 234,
         name: 'TEST',
@@ -69,11 +68,11 @@ test('Negative: Add widget to non-existent dashboard', async () => {
     }
       };
   
-    const res = await dashboardApi.addWidgetToDashboard(project, nonExistentId, widgetPayload);
+    const response = await dashboardApi.addWidgetToDashboard(project, nonExistentId, widgetPayload);
   
-    expect(res.status()).toBe(404);
+    expect(response.status).toBe(404);
   
-    const body = await res.json();
+    const body = await response.data;
     expect(body.message).toContain(`Dashboard with ID '${nonExistentId}' not found`);
   });
 });
