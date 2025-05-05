@@ -44,6 +44,7 @@ export async function getAuthToken(): Promise<string> {
 
   if (typeof response.status === 'function') {
     // Playwright
+    // @ts-ignore
     statusCode = response.status();
   } else {
     // Axios
@@ -53,8 +54,9 @@ export async function getAuthToken(): Promise<string> {
   if (statusCode !== 200) {
     throw new Error(`Login failed: ${statusCode}`);
   }
-
+// @ts-ignore
     const responseBody = typeof response.json === 'function' 
+    // @ts-ignore
       ? await response.json() 
       : response.data; 
 

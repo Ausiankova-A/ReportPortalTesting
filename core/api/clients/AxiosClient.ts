@@ -18,7 +18,7 @@ export class AxiosClient implements IApiClient {
       const response = await this.client.get<T>(endpoint, { headers });
       logResponse(response);
       return { status: response.status, data: response.data };
-    } catch (error) {
+    } catch (error: any) {
       return this.handleError(error);
     }
   }
@@ -29,7 +29,7 @@ export class AxiosClient implements IApiClient {
       const response = await this.client.post<T>(endpoint, data, { headers });
       logResponse(response);
       return { status: response.status, data: response.data };
-    } catch (error) {
+    } catch (error: any) {
       return this.handleError(error);
     }
   }
@@ -40,7 +40,7 @@ export class AxiosClient implements IApiClient {
       const response = await this.client.put<T>(endpoint, data, { headers });
       logResponse(response);
       return { status: response.status, data: response.data };
-    } catch (error) {
+    } catch (error: any) {
       return this.handleError(error);
     }
   }
@@ -51,7 +51,7 @@ export class AxiosClient implements IApiClient {
       const response = await this.client.delete<T>(endpoint, { headers });
       logResponse(response);
       return { status: response.status, data: response.data };
-    } catch (error) {
+    } catch (error: any) {
       return this.handleError(error);
     }
   }
