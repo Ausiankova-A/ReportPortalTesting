@@ -34,7 +34,7 @@ export async function getAuthToken(): Promise<string> {
 
   const headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
-    'Authorization': 'Basic dWk6dWltYW4=', 
+    'Authorization': process.env.BASIC_AUTH_TOKEN as string,  
   };
 
   try {
