@@ -23,7 +23,7 @@ export interface Dashboard {
   }
   
   export interface UpdateDashboardPayload {
-    name?: string;
+    name: string;
     description?: string;
   }
 

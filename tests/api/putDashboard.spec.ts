@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 test.describe('Dashboards API - PUT', () => {
-    const project = process.env.DASHBOARD_NAME;
+    const project = process.env.DASHBOARD_NAME!;
     const dashboardName = `put-test-${Date.now()}`;
     let dashboardId: number;
 
@@ -49,7 +49,6 @@ test('Negative: Update non-existent dashboard ID', async ({ dashboardApi }) => {
 test('Negative: Add widget to non-existent dashboard', async ({ dashboardApi }) => {
     const nonExistentId = 987654;
     const widgetPayload: AddWidgetPayload = {
-        addWidget: {
         widgetId: 234,
         name: 'TEST',
         description: '',
@@ -65,7 +64,6 @@ test('Negative: Add widget to non-existent dashboard', async ({ dashboardApi }) 
           { name: 'DEMO_FILTER', value: '6' },
         ],
         filterIds: ['6'],
-    }
       };
   
     const response = await dashboardApi.addWidgetToDashboard(project, nonExistentId, widgetPayload);

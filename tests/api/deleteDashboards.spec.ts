@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 test.describe('Dashboards API - DELETE', () => {
-    const project = process.env.DASHBOARD_NAME;
+    const project = process.env.DASHBOARD_NAME!;
     let dashboardId: number;
     const dashboardName = `delete-test-${Date.now()}`;
 

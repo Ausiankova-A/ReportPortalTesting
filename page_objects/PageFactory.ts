@@ -5,6 +5,7 @@ import { FiltersPage } from '@pages/FiltersPage';
 import { DebugPage } from '@pages/DebugPage';
 import { ProjectMembersPage } from '@pages/ProjectMembersPage';
 import { ProjectSettingsPage } from '@pages/ProjectSettingsPage';
+import { LocatorAdapter } from '@core/configuration/LocatorAdapter';
 
 export class PageFactory {
     public reportPortal: ReportPortal;
@@ -15,13 +16,13 @@ export class PageFactory {
     public projectMembersPage: ProjectMembersPage;
     public projectSettingsPage: ProjectSettingsPage;
 
-    constructor(page: any) {
-        this.reportPortal = new ReportPortal(page);
-        this.dashboardsPage = new DashboardsPage(page);
-        this.launchesPage = new LaunchesPage(page);
-        this.filtersPage = new FiltersPage(page);
-        this.debugPage = new DebugPage(page);
-        this.projectMembersPage = new ProjectMembersPage(page);
-        this.projectSettingsPage = new ProjectSettingsPage(page);
+    constructor(page: any, locatorAdapter: LocatorAdapter) {
+        this.reportPortal = new ReportPortal(page, locatorAdapter);
+        this.dashboardsPage = new DashboardsPage(page, locatorAdapter);
+        this.launchesPage = new LaunchesPage(page, locatorAdapter);
+        this.filtersPage = new FiltersPage(page, locatorAdapter);
+        this.debugPage = new DebugPage(page, locatorAdapter);
+        this.projectMembersPage = new ProjectMembersPage(page, locatorAdapter);
+        this.projectSettingsPage = new ProjectSettingsPage(page, locatorAdapter);
     }
 }

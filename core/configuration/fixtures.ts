@@ -6,6 +6,7 @@ import { FiltersPage } from '@pages/FiltersPage';
 import { DebugPage } from '@pages/DebugPage';
 import { ProjectMembersPage } from '@pages/ProjectMembersPage';
 import { ProjectSettingsPage } from '@pages/ProjectSettingsPage';
+import { LocatorAdapter } from '@core/configuration/LocatorAdapter';
 
 type ReportPortalFixtures = {
     reportPortal: ReportPortal;
@@ -15,6 +16,7 @@ type ReportPortalFixtures = {
     debugPage: DebugPage;
     projectMembersPage: ProjectMembersPage;
     projectSettingsPage: ProjectSettingsPage;
+    locatorAdapter: LocatorAdapter;
 }
 
 const test = baseTest.extend<ReportPortalFixtures>({
@@ -26,32 +28,37 @@ const test = baseTest.extend<ReportPortalFixtures>({
         await use(page); 
       },
 
-    reportPortal: async ({ page }, use) => {
-        const reportPortal = new ReportPortal(page);
+    locatorAdapter: async ({ page }, use) => {
+    const adapter = new LocatorAdapter(page);
+    await use(adapter);
+  },
+
+    reportPortal: async ({ page, locatorAdapter  }, use) => {
+        const reportPortal = new ReportPortal(page, locatorAdapter);
         await use(reportPortal);
     },
-    dashboardsPage: async ({ page }, use) => {
-        const dashboardsPage = new DashboardsPage(page);
+    dashboardsPage: async ({ page, locatorAdapter  }, use) => {
+        const dashboardsPage = new DashboardsPage(page, locatorAdapter );
         await use(dashboardsPage);
     },
-    launchesPage: async ({ page }, use) => {
-        const launchesPage = new LaunchesPage(page);
+    launchesPage: async ({ page, locatorAdapter  }, use) => {
+        const launchesPage = new LaunchesPage(page, locatorAdapter );
         await use(launchesPage);
     },
-    filtersPage: async ({ page }, use) => {
-        const filtersPage = new FiltersPage(page);
+    filtersPage: async ({ page, locatorAdapter  }, use) => {
+        const filtersPage = new FiltersPage(page, locatorAdapter );
         await use(filtersPage);
     },
-    debugPage: async ({ page }, use) => {
-        const debugPage = new DebugPage(page);
+    debugPage: async ({ page, locatorAdapter  }, use) => {
+        const debugPage = new DebugPage(page, locatorAdapter );
         await use(debugPage);
     },
-    projectMembersPage: async ({ page }, use) => {
-        const projectMembersPage = new ProjectMembersPage(page);
+    projectMembersPage: async ({ page, locatorAdapter  }, use) => {
+        const projectMembersPage = new ProjectMembersPage(page, locatorAdapter );
         await use(projectMembersPage);
     },
-    projectSettingsPage: async ({ page }, use) => {
-        const projectSettingsPage = new ProjectSettingsPage(page);
+    projectSettingsPage: async ({ page, locatorAdapter  }, use) => {
+        const projectSettingsPage = new ProjectSettingsPage(page, locatorAdapter );
         await use(projectSettingsPage);
     },
 });

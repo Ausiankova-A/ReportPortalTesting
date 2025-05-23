@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 test.describe('Dashboards API - POST', () => {
-    const project = process.env.DASHBOARD_NAME;
+    const project = process.env.DASHBOARD_NAME!;
     const dashboardName = `post-test-${Date.now()}`;
 
   test('Create dashboard - Positive', async ({ dashboardApi }) => {
@@ -24,6 +24,7 @@ test.describe('Dashboards API - POST', () => {
 
   test('Create dashboard - Negative: missing name', async ({ dashboardApi }) => {
     const payload = {
+      name:'',
       description: 'No name provided',
     };
   

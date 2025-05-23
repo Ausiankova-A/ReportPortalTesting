@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 test.describe('Dashboards API - GET', () => {
-    const project = process.env.DASHBOARD_NAME; 
+    const project = process.env.DASHBOARD_NAME!; 
 
   test('GET all dashboards - Positive', async ({ dashboardApi }) => {
     const response = await dashboardApi.getAllDashboards(project);

@@ -1,25 +1,27 @@
-{
-    "compilerOptions": {
-      "baseUrl": ".", 
-      "paths": {
-        "@core/*": ["core/*"],
-        "@core/set-up/*": ["core/set-up/*"], 
-        "@core/configuration/*": ["core/configuration/*"], 
-        "@pages/*": ["page_objects/*"]
-      },
-      "strict": true,
+  {
+  "compilerOptions": {
+    "baseUrl": ".", 
+    "paths": {
+      "@core/*": ["core/*"],
+      "@core/set-up/*": ["core/set-up/*"], 
+      "@core/configuration/*": ["core/configuration/*"], 
+      "@pages/*": ["page_objects/*"]
+    },
+    "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-     "module": "commonjs",
+    "module": "commonjs",
     "esModuleInterop": true,
-    "target": "ES6",
+    "target": "ES2020",
+    "lib": ["es2020", "dom"],
     "outDir": "./dist",
-    "types": ["mocha", "node", "chai"]
-    },
-    "include": [
+    "types": ["mocha", "node", "chai", "@wdio/globals"]
+  },
+  "include": [
     "core/**/*",
-    "tests/*.ts",
-    "src/**/*.ts", "page_objects/baseInterface/collection.ts", "page_objects/baseInterface/basePage.ts", "tests/playwrightTests/CheckTabs.spec.ts", "tests/playwrightTests/AddNewDashboard.spec.ts" ],
+    "page_objects/**/*",
+    "tests/**/*",
+    "wdio.conf.ts"
+  ],
   "exclude": ["node_modules"]
-  }
-  
+}

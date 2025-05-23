@@ -14,12 +14,14 @@ export class Collection<T> {
     constructor(
         public locator: Locator,
         public itemClass: ItemClass<T>,
+        public locatorAdapter: any 
     ) {}
-    
+
     filter(options: FilterOptions): T {
-        return new this.itemClass(this.locator.filter(options));
+        return new this.itemClass(this.locator.filter(options), this.locatorAdapter);
     }
 }
-export function collection<T>(locator: Locator, itemClass: ItemClass<T>) {
-    return new Collection(locator, itemClass);
+
+export function collection<T>(locator: Locator, itemClass: ItemClass<T>, locatorAdapter: any) {
+    return new Collection(locator, itemClass, locatorAdapter);
 }

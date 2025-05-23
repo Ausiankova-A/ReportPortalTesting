@@ -1,9 +1,11 @@
-import { Page } from '@playwright/test';
+import { LocatorAdapter } from '@core/configuration/LocatorAdapter';
 
 export class BasePage {
-    page: Page;
+    protected page: any;
+    protected locatorAdapter: LocatorAdapter;
 
-    constructor(page: Page) {
+    constructor(page: any, locatorAdapter: LocatorAdapter) {
         this.page = page;
+        this.locatorAdapter = locatorAdapter;
     }
 }
