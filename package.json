@@ -7,10 +7,11 @@
     "preui": "ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
     "ui": "npx playwright test --ui",
     "pretest": "ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
-    "test": "npx playwright test",
-    "test-mocha": "cross-env MOCHA_THREADS=%MOCHA_THREADS% npx mocha --require ts-node/register --require tsconfig-paths/register --timeout 10000 --parallel --jobs %MOCHA_THREADS% \"tests/mochaTests/*.spec.ts\"",
+    "test": "cross-env TEST_FRAMEWORK=playwright npx playwright test",
+    "test-mocha": "cross-env TEST_FRAMEWORK=playwright cross-env MOCHA_THREADS=%MOCHA_THREADS% npx mocha --require ts-node/register --require tsconfig-paths/register --timeout 10000 --parallel --jobs %MOCHA_THREADS% \"tests/mochaTests/*.spec.ts\"",
     "lint": "eslint . --ext .ts,.tsx",
-    "test-cucumber": "cucumber-js --config cucumber.config.js"
+    "test-cucumber": "cross-env TEST_FRAMEWORK=playwright cucumber-js --config cucumber.config.js",
+    "test-wdio": "cross-env TEST_FRAMEWORK=wdio wdio run wdio.conf.ts"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,13 @@
     "@types/node": "^22.14.0",
     "@typescript-eslint/eslint-plugin": "^8.28.0",
     "@typescript-eslint/parser": "^8.28.0",
+    "@wdio/cli": "^9.14.0",
+    "@wdio/globals": "^9.14.0",
+    "@wdio/local-runner": "^9.14.0",
+    "@wdio/mocha-framework": "^9.14.0",
+    "@wdio/sauce-service": "^9.14.0",
+    "@wdio/spec-reporter": "^9.14.0",
+    "@wdio/types": "^9.14.0",
     "allure-playwright": "^3.2.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.23.0",

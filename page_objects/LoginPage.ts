@@ -1,15 +1,31 @@
 import { BasePage } from '@pages/baseInterface/basePage';
+import { LocatorAdapter } from '@core/configuration/LocatorAdapter';
 import { expect } from '@playwright/test';
 import { logger } from '@core/utils/logger';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-export class LoginPage extends BasePage{
-    loginForm = this.page.locator('.loginForm__login-form--UYW8B');
-    loginField = this.page.locator('input[name=login]');
-    passwordField = this.page.locator('input[name=password]');
-    loginButton = this.page.locator('xpath=.//button[text()="Login"]');
+export class LoginPage extends BasePage {
+    locatorAdapter: LocatorAdapter;
+
+    constructor(page: any, locatorAdapter: LocatorAdapter) {
+        super(page, locatorAdapter);
+        this.locatorAdapter = locatorAdapter;
+    }
+
+    get loginForm() {
+        return this.locatorAdapter.getLocator('.loginForm__login-form--UYW8B');
+    }
+    get loginField() {
+        return this.locatorAdapter.getLocator('input[name=login]');
+    }
+    get passwordField() {
+        return this.locatorAdapter.getLocator('input[name=password]');
+    }
+    get loginButton() {
+        return this.locatorAdapter.getLocator('button.bigButton__big-button--BmG4Q');
+    }
 
     async login() {
         if (!process.env.LOGIN || !process.env.PASSWORD) {
@@ -21,5 +37,19 @@ export class LoginPage extends BasePage{
         await this.loginButton.click();
         await expect(this.loginForm).toBeHidden();
         logger.info(`User ${process.env.LOGIN} is logged in`);
-    } 
     }
+
+    async loginWdio() {
+        if (!process.env.LOGIN || !process.env.PASSWORD) {
+            throw new Error('Environment variable LOGIN and PASSWORD is not set');
+        }
+
+        await this.loginForm.waitForDisplayed({ timeout: 15000 });
+        await this.loginField.setValue(process.env.LOGIN);
+        await this.passwordField.setValue(process.env.PASSWORD);
+        await this.loginButton.click();
+        await this.loginForm.waitForDisplayed({ reverse: true, timeout: 15000 });
+
+        logger.info(`User ${process.env.LOGIN} is logged in (WDIO)`);
+    }
+}
