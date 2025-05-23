@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "preui": "ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
-    "ui": "npx playwright test --ui",
+    "ui": "npx playwright test --project=playwrightTests --ui",
     "pretest": "ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
     "test": "cross-env TEST_FRAMEWORK=playwright npx playwright test",
     "test-mocha": "cross-env TEST_FRAMEWORK=playwright cross-env MOCHA_THREADS=%MOCHA_THREADS% npx mocha --require ts-node/register --require tsconfig-paths/register --timeout 10000 --parallel --jobs %MOCHA_THREADS% \"tests/mochaTests/*.spec.ts\"",
     "lint": "eslint . --ext .ts,.tsx",
     "test-cucumber": "cross-env TEST_FRAMEWORK=playwright cucumber-js --config cucumber.config.js",
-    "test-wdio": "cross-env TEST_FRAMEWORK=wdio wdio run wdio.conf.ts"
+    "test-wdio": "cross-env TEST_FRAMEWORK=wdio wdio run wdio.conf.ts",
+    "api": "npx playwright test --project=api"
   },
   "repository": {
     "type": "git",
@@ -51,6 +52,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "axios": "^1.9.0",
     "chai": "^5.2.0",
     "dotenv": "^16.4.7",
     "winston": "^3.17.0"

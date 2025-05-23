@@ -19,10 +19,16 @@ export default defineConfig({
 
   projects: [
     {
-      name: 'chromium',
+      name: 'playwrightTests',
+      testDir: './tests/playwrightTests',
       use: { ...devices['Desktop Chrome'],
         headless: false,
        },
+    },
+
+    {
+      name: 'api', 
+      testDir: './tests/api', 
     },
   ],
 
