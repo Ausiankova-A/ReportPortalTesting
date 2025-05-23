@@ -12,10 +12,10 @@ describe('Widgets', function () {
 //adding new widget
         await pageFactory.reportPortal.tabs.dashboards.click();
         await waitForVisible(pageFactory.dashboardsPage.title);
-        await(await CustomElement.findElementByText(pageFactory.dashboardsPage.tableName,"DEMO DASHBOARD")).click();
+        await(await CustomElement.findElementByText(pageFactory.dashboardsPage.tableName,'DEMO DASHBOARD')).click();
         await waitForClickable(pageFactory.dashboardsPage.addNewDashboard.addNewWidget);
         await pageFactory.dashboardsPage.addNewDashboard.addNewWidget.click();
-        await (await CustomElement.findElementByText(pageFactory.dashboardsPage.addNewWidget.widgetType, "Launch statistics chart")).click()
+        await (await CustomElement.findElementByText(pageFactory.dashboardsPage.addNewWidget.widgetType, 'Launch statistics chart')).click();
         await pageFactory.dashboardsPage.addNewWidget.nextStepButton.click();
         await pageFactory.dashboardsPage.addNewWidget.demoFilter.click();
         await pageFactory.dashboardsPage.addNewWidget.nextStepButton.click();
@@ -26,7 +26,7 @@ describe('Widgets', function () {
         await browser.pause(2000);
         await CustomElement.expectElementContainingTextIsDisplayed(pageFactory.dashboardsPage.addNewDashboard.widgetsNames, widgetName);
 //editing new widget
-        await hoverElement(await CustomElement.findElementByText(pageFactory.dashboardsPage.addNewDashboard.widgetsNames, widgetName))
+        await hoverElement(await CustomElement.findElementByText(pageFactory.dashboardsPage.addNewDashboard.widgetsNames, widgetName));
         let widgets = await pageFactory.dashboardsPage.addNewDashboard.getWidgetHeaderCollection();
         let newcreatedWidget = await widgets.find(async (el: any) => {
             return (await el.getText()).includes(widgetName);
@@ -38,7 +38,7 @@ describe('Widgets', function () {
         await pageFactory.dashboardsPage.addNewWidget.saveButton.click(); 
         await waitForClickable(pageFactory.dashboardsPage.addNewDashboard.addNewWidget);
 //deleting new widget
-        await hoverElement(await CustomElement.findElementByText(pageFactory.dashboardsPage.addNewDashboard.widgetsNames, widgetName)) 
+        await hoverElement(await CustomElement.findElementByText(pageFactory.dashboardsPage.addNewDashboard.widgetsNames, widgetName));
         await waitForVisible(newcreatedWidget.editWidget);
         await newcreatedWidget.deleteWidget[1].click();
         await pageFactory.dashboardsPage.deleteconfirmation.click();
