@@ -61,7 +61,6 @@ export class LoginPage extends BasePage {
         logger.info('Password entered');
         await this.loginButton.click();
         await this.loginForm.waitForDisplayed({ reverse: true, timeout: 15000 });
-        await browser.saveScreenshot('./logged-in-screen.png');
 
         logger.info(`User ${process.env.LOGIN} is logged in (WDIO)`);
     }
