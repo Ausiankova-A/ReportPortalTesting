@@ -2,16 +2,12 @@ pipeline {
     agent any
 
     triggers {
-        // a) запуск каждый день в 10:00
         cron('H 10 * * *') 
-
-        // b) запуск по webhook (GitHub push)
-        // только если используешь GitHub
-        pollSCM('* * * * *') // или используешь GitHub webhook
+        pollSCM('* * * * *') 
     }
 
     tools {
-        nodejs "NodeJS 20" // Название в Jenkins (Manage Jenkins → Global Tool Configuration)
+        nodejs "NodeJS 20"
     }
 
     stages {
@@ -29,7 +25,6 @@ pipeline {
         }
         stage('Prepare env') {
             steps {
-                // Скачиваем секретный файл .env
                 withCredentials([file(credentialsId: 'AA', variable: 'ENV_FILE')]) {
                     sh 'cp "$ENV_FILE" .env'
                 }
@@ -43,7 +38,7 @@ pipeline {
 
         stage('Publish Results') {
             steps {
-                junit 'reports/**/*.xml' // если тесты выводят JUnit xml
+                junit 'reports/**/*.xml'
             }
         }
     }
