@@ -46,8 +46,10 @@ export class LoginPage extends BasePage {
         }
 
         await this.loginForm.waitForDisplayed({ timeout: 15000 });
+        await this.loginField.waitForEnabled({ timeout: 15000 });
         await this.loginField.setValue(process.env.LOGIN);
         await browser.saveScreenshot('./logged-in-screen.png');
+        await this.loginField.waitForEnabled({ timeout: 15000 });
         await this.passwordField.setValue(process.env.PASSWORD);
         await browser.saveScreenshot('./logged-in-screen.png');
         await this.loginButton.click();
