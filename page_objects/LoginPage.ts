@@ -24,7 +24,7 @@ export class LoginPage extends BasePage {
         return this.locatorAdapter.getLocator('input[name=password]');
     }
     get loginButton() {
-        return this.locatorAdapter.getLocator('button.bigButton__big-button--BmG4Q');
+        return this.locatorAdapter.getLocator('button[type=submit]');
     }
 
     async login() {
