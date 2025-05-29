@@ -45,8 +45,12 @@ export class LoginPage extends BasePage {
             throw new Error('Environment variable LOGIN and PASSWORD is not set');
         }
 
+        console.log('зашли в функцию');
+
         await this.loginForm.waitForDisplayed({ timeout: 15000 });
+        console.log('дождались пока загрузится видимость');
         await this.loginField.waitForEnabled({ timeout: 15000 });
+        console.log('дождались пока можно взаиможействовать');
         console.log('Attempting to input login');
         await this.loginField.setValue(process.env.LOGIN);
         console.log('Login entered');
