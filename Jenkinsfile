@@ -22,7 +22,7 @@ pipeline {
         stage('Prepare env') {
             steps {
                 withCredentials([file(credentialsId: 'AA', variable: 'ENV_FILE')]) {
-                    bat 'cp "$ENV_FILE" .env'
+                    bat 'copy "%ENV_FILE%" .env'
                 }
             }
         }
