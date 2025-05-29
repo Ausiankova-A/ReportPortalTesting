@@ -5,9 +5,9 @@ pipeline {
         cron('H 10 * * *') 
     }
 
-    tools {
-        nodejs "NodeJS 20"
-    }
+    // tools {
+    //     nodejs "NodeJS 20"
+    // }
 
     stages {
         stage('Checkout') {
@@ -19,6 +19,7 @@ pipeline {
 
         stage('Install') {
             steps {
+                sh 'node -v && npm -v'
                 sh 'npm install'
             }
         }
