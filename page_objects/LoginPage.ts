@@ -47,13 +47,13 @@ export class LoginPage extends BasePage {
 
         await this.loginForm.waitForDisplayed({ timeout: 15000 });
         await this.loginField.waitForEnabled({ timeout: 15000 });
-        logger.info('Attempting to input login');
+        console.log('Attempting to input login');
         await this.loginField.setValue(process.env.LOGIN);
-        logger.info('Login entered');
+        console.log('Login entered');
         await this.loginField.waitForEnabled({ timeout: 15000 });
-        logger.info('Attempting to input password');
+        console.log('Attempting to input password');
         await this.passwordField.setValue(process.env.PASSWORD);
-        logger.info('Password entered');
+        console.log('Password entered');
         await this.loginButton.click();
         await this.loginForm.waitForDisplayed({ reverse: true, timeout: 15000 });
         await browser.saveScreenshot('./logged-in-screen.png');
