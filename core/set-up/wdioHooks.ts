@@ -23,7 +23,7 @@ export const mochaHooks = {
   },
 
   beforeEach: async function (this: Mocha.Context) {
-    // await browser.url(process.env.REPORT_PORTAL_URL || '');
+    await browser.url(process.env.REPORT_PORTAL_URL || '');
     const locatorAdapter = new LocatorAdapter();
     pageFactory = new PageFactory(browser, locatorAdapter);
     this.pageFactory = pageFactory;
@@ -41,9 +41,9 @@ export const mochaHooks = {
     if (!fs.existsSync(dirPath)) {
       try {
         fs.mkdirSync(dirPath, { recursive: true });
-        logger.info(`🗂 Created missing directory: ${dirPath}`);
+        logger.info(`Created missing directory: ${dirPath}`);
       } catch (e) {
-        logger.error(`❌ Failed to create directory: ${dirPath}`, e);
+        logger.error(`Failed to create directory: ${dirPath}`, e);
         return;
       }
     }
@@ -54,9 +54,9 @@ export const mochaHooks = {
 
     try {
       await browser.saveScreenshot(screenshotPath);
-      logger.info(`✅ Screenshot saved: ${screenshotPath}`);
+      logger.info(`Screenshot saved: ${screenshotPath}`);
     } catch (err) {
-      logger.error(`❌ Failed to save screenshot to ${screenshotPath}:`, err);
+      logger.error(`Failed to save screenshot to ${screenshotPath}:`, err);
     }
   } else {
     logger.info(`Test passed: ${testName}`);

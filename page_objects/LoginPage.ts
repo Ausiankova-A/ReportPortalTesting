@@ -3,6 +3,7 @@ import { LocatorAdapter } from '@core/configuration/LocatorAdapter';
 import { expect } from '@playwright/test';
 import { logger } from '@core/utils/logger';
 import dotenv from 'dotenv';
+import { browser } from '@wdio/globals';
 
 dotenv.config();
 
@@ -46,9 +47,12 @@ export class LoginPage extends BasePage {
 
         await this.loginForm.waitForDisplayed({ timeout: 15000 });
         await this.loginField.setValue(process.env.LOGIN);
+        await browser.saveScreenshot('./logged-in-screen.png');
         await this.passwordField.setValue(process.env.PASSWORD);
+        await browser.saveScreenshot('./logged-in-screen.png');
         await this.loginButton.click();
         await this.loginForm.waitForDisplayed({ reverse: true, timeout: 15000 });
+        await browser.saveScreenshot('./logged-in-screen.png');
 
         logger.info(`User ${process.env.LOGIN} is logged in (WDIO)`);
     }
