@@ -254,34 +254,50 @@ capabilities: [{
      * @param {boolean} result.passed    true if test has passed, otherwise false
      * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-    // },
-//     afterTest: async function (test: any, { error }: any) {
-//     if (error) {
-//         const timestamp = new Date().toISOString().replace(/:/g, '-');
-//         const filepath = `./errorShots/${test.title}_${timestamp}.png`;
-//         await browser.saveScreenshot(filepath);
-//         console.log(`Screenshot saved to ${filepath}`);
-//     }
-// },
-afterTest: async function (test: any, context: any) {
-    if (context.error) {
+    
+onPrepare: function () {
+    const fs = require('fs');
+    const path = require('path');
+    const dir = path.resolve('./errorShots');
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
+},
+    afterTest: async function (test: any, { error }: any) {
+    if (error) {
+        const fs = require('fs');
+        const path = require('path');
         const dir = path.resolve('./errorShots');
 
-        try {
-            if (!fs.existsSync(dir)) {
-                fs.mkdirSync(dir, { recursive: true });
-            }
-
-            const timestamp = new Date().toISOString().replace(/:/g, '-');
-            const filepath = path.join(dir, `${test.title}_${timestamp}.png`);
-            await browser.saveScreenshot(filepath);
-            console.log(`✅ Screenshot saved to: ${filepath}`);
-        } catch (e) {
-            console.error(`❌ Failed to save screenshot: ${e}`);
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
         }
+
+        const timestamp = new Date().toISOString().replace(/:/g, '-');
+        const filepath = path.join(dir, `${test.title}_${timestamp}.png`);
+        await browser.saveScreenshot(filepath);
+        console.log(`Screenshot saved to ${filepath}`);
     }
-}
+},
+
+// afterTest: async function (test: any, context: any) {
+//     if (context.error) {
+//         const dir = path.resolve('./errorShots');
+
+//         try {
+//             if (!fs.existsSync(dir)) {
+//                 fs.mkdirSync(dir, { recursive: true });
+//             }
+
+//             const timestamp = new Date().toISOString().replace(/:/g, '-');
+//             const filepath = path.join(dir, `${test.title}_${timestamp}.png`);
+//             await browser.saveScreenshot(filepath);
+//             console.log(`✅ Screenshot saved to: ${filepath}`);
+//         } catch (e) {
+//             console.error(`❌ Failed to save screenshot: ${e}`);
+//         }
+//     }
+// }
 
 
     /**
