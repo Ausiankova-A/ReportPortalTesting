@@ -47,7 +47,7 @@ export class LoginPage extends BasePage {
 
         logger.info('зашли в функцию');
 
-        await this.loginForm.waitForDisplayed({ timeout: 15000 });
+        await this.loginForm.waitForDisplayed({ timeout: 30000 });
         logger.info('дождались пока загрузится видимость');
         await this.loginField.waitForEnabled({ timeout: 15000 });
         logger.info('дождались пока можно взаиможействовать');
