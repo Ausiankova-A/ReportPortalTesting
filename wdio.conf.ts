@@ -1,6 +1,8 @@
 import type { Browser } from 'webdriverio';
 import { browser } from '@wdio/globals';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
 
 dotenv.config();
 
@@ -254,14 +256,30 @@ capabilities: [{
      */
     // afterTest: function(test, context, { error, result, duration, passed, retries }) {
     // },
-    afterTest: async function (test: any, { error }: any) {
+//     afterTest: async function (test: any, { error }: any) {
+//     if (error) {
+//         const timestamp = new Date().toISOString().replace(/:/g, '-');
+//         const filepath = `./errorShots/${test.title}_${timestamp}.png`;
+//         await browser.saveScreenshot(filepath);
+//         console.log(`Screenshot saved to ${filepath}`);
+//     }
+// },
+afterTest: async function (test: any, { error }: any) {
     if (error) {
+        const dir = path.resolve('./errorShots');
+
+        // Создание папки, если она не существует
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+
         const timestamp = new Date().toISOString().replace(/:/g, '-');
-        const filepath = `./errorShots/${test.title}_${timestamp}.png`;
+        const filepath = path.join(dir, `${test.title}_${timestamp}.png`);
+
         await browser.saveScreenshot(filepath);
         console.log(`Screenshot saved to ${filepath}`);
     }
-},
+}
 
 
     /**
