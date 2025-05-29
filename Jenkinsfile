@@ -5,10 +5,6 @@ pipeline {
         cron('H 10 * * *') 
     }
 
-    // tools {
-    //     nodejs "NodeJS 20"
-    // }
-
     stages {
         stage('Checkout') {
             steps {
@@ -19,20 +15,20 @@ pipeline {
 
         stage('Install') {
             steps {
-                sh 'node -v && npm -v'
-                sh 'npm install'
+                bat 'node -v && npm -v'
+                bat 'npm install'
             }
         }
         stage('Prepare env') {
             steps {
                 withCredentials([file(credentialsId: 'AA', variable: 'ENV_FILE')]) {
-                    sh 'cp "$ENV_FILE" .env'
+                    bat 'cp "$ENV_FILE" .env'
                 }
             }
         }
         stage('Test') {
             steps {
-                sh 'npm run test-wdio'
+                bat 'npm run test-wdio'
             }
         }
 
