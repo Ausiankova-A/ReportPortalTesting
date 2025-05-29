@@ -3,6 +3,7 @@ import { browser } from '@wdio/globals';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
+import Video from 'wdio-video-reporter';
 
 dotenv.config();
 
@@ -150,7 +151,10 @@ capabilities: [{
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
+    reporters: ['spec', [Video, {
+    saveAllVideos: false, // или false, чтобы сохранять только упавшие
+    videoSlowdownMultiplier: 3 // можно замедлить видео
+  }]],
 
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
@@ -286,7 +290,7 @@ afterTest: async function (test: any, context: any) {
         const path = require('path');
 
         const dirPath = path.resolve('./errorShots');
-        
+
         if (!fs.existsSync(dirPath)) {
             try {
                 fs.mkdirSync(dirPath, { recursive: true });
