@@ -264,20 +264,22 @@ capabilities: [{
 //         console.log(`Screenshot saved to ${filepath}`);
 //     }
 // },
-afterTest: async function (test: any, { error }: any) {
-    if (error) {
+afterTest: async function (test: any, context: any) {
+    if (context.error) {
         const dir = path.resolve('./errorShots');
 
-        // Создание папки, если она не существует
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
+        try {
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir, { recursive: true });
+            }
+
+            const timestamp = new Date().toISOString().replace(/:/g, '-');
+            const filepath = path.join(dir, `${test.title}_${timestamp}.png`);
+            await browser.saveScreenshot(filepath);
+            console.log(`✅ Screenshot saved to: ${filepath}`);
+        } catch (e) {
+            console.error(`❌ Failed to save screenshot: ${e}`);
         }
-
-        const timestamp = new Date().toISOString().replace(/:/g, '-');
-        const filepath = path.join(dir, `${test.title}_${timestamp}.png`);
-
-        await browser.saveScreenshot(filepath);
-        console.log(`Screenshot saved to ${filepath}`);
     }
 }
 
