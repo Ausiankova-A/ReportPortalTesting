@@ -255,49 +255,60 @@ capabilities: [{
      * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
     
-onPrepare: function () {
-    const fs = require('fs');
-    const path = require('path');
-    const dir = path.resolve('./errorShots');
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-    }
-},
-    afterTest: async function (test: any, { error }: any) {
-    if (error) {
+// onPrepare: function () {
+//     const fs = require('fs');
+//     const path = require('path');
+//     const dir = path.resolve('./errorShots');
+//     if (!fs.existsSync(dir)) {
+//         fs.mkdirSync(dir, { recursive: true });
+//     }
+// },
+//     afterTest: async function (test: any, { error }: any) {
+//     if (error) {
+//         const fs = require('fs');
+//         const path = require('path');
+//         const dir = path.resolve('./errorShots');
+
+//         if (!fs.existsSync(dir)) {
+//             fs.mkdirSync(dir, { recursive: true });
+//         }
+
+//         const timestamp = new Date().toISOString().replace(/:/g, '-');
+//         const filepath = path.join(dir, `${test.title}_${timestamp}.png`);
+//         await browser.saveScreenshot(filepath);
+//         console.log(`Screenshot saved to ${filepath}`);
+//     }
+// },
+
+afterTest: async function (test: any, context: any) {
+    if (context.error) {
         const fs = require('fs');
         const path = require('path');
-        const dir = path.resolve('./errorShots');
 
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
+        const dirPath = path.resolve('./errorShots');
+        
+        if (!fs.existsSync(dirPath)) {
+            try {
+                fs.mkdirSync(dirPath, { recursive: true });
+                console.log(`🗂 Created missing directory: ${dirPath}`);
+            } catch (e) {
+                console.error(`❌ Failed to create directory: ${dirPath}`, e);
+                return;
+            }
         }
 
         const timestamp = new Date().toISOString().replace(/:/g, '-');
-        const filepath = path.join(dir, `${test.title}_${timestamp}.png`);
-        await browser.saveScreenshot(filepath);
-        console.log(`Screenshot saved to ${filepath}`);
+        const filename = `${test.title.replace(/\s+/g, '_')}_${timestamp}.png`;
+        const filepath = path.join(dirPath, filename);
+
+        try {
+            await browser.saveScreenshot(filepath);
+            console.log(`✅ Screenshot saved: ${filepath}`);
+        } catch (err) {
+            console.error(`❌ Failed to save screenshot to ${filepath}:`, err);
+        }
     }
-},
-
-// afterTest: async function (test: any, context: any) {
-//     if (context.error) {
-//         const dir = path.resolve('./errorShots');
-
-//         try {
-//             if (!fs.existsSync(dir)) {
-//                 fs.mkdirSync(dir, { recursive: true });
-//             }
-
-//             const timestamp = new Date().toISOString().replace(/:/g, '-');
-//             const filepath = path.join(dir, `${test.title}_${timestamp}.png`);
-//             await browser.saveScreenshot(filepath);
-//             console.log(`✅ Screenshot saved to: ${filepath}`);
-//         } catch (e) {
-//             console.error(`❌ Failed to save screenshot: ${e}`);
-//         }
-//     }
-// }
+}
 
 
     /**
