@@ -9,7 +9,7 @@
     "pretest": "cross-env TEST_FRAMEWORK=playwright ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
     "test": "cross-env TEST_FRAMEWORK=playwright npx playwright test",
     "test-mocha": "cross-env TEST_FRAMEWORK=playwright cross-env MOCHA_THREADS=2 npx mocha --require ts-node/register --require tsconfig-paths/register --timeout 30000 --parallel --jobs 2 --reporter mocha-junit-reporter \"tests/mochaTests/*.spec.ts\"",
-    "test-mocha-ci": "cross-env TEST_FRAMEWORK=playwright npx mocha --loader ts-node/esm --require tsconfig-paths/register --timeout 30000 --reporter mocha-junit-reporter --reporter-options mochaFile=reports/junit/results-[hash].xml 'tests/mochaTests/*.spec.ts'",
+    "test-mocha-ci": "cross-env TEST_FRAMEWORK=playwright npx mocha --loader ./node_modules/ts-node/esm.mjs --require tsconfig-paths/register --timeout 30000 --reporter mocha-junit-reporter --reporter-options mochaFile=reports/junit/results-[hash].xml \"tests/mochaTests/*.spec.ts\"",
     "lint": "eslint . --ext .ts,.tsx",
     "test-cucumber": "cross-env TEST_FRAMEWORK=playwright cucumber-js --config cucumber.config.js",
     "test-wdio": "cross-env TEST_FRAMEWORK=wdio wdio run wdio.conf.ts",
