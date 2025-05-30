@@ -42,7 +42,9 @@ export const config: WebdriverIO.Config = {
 capabilities: [{
         browserName: 'chrome',
         'goog:chromeOptions': {
-        args: ['--window-size=1920,1080']
+        args: ['--window-size=1920,1080',
+    '--no-sandbox',
+    '--disable-dev-shm-usage']
     }
     }],
 // SAUCE_LABS
@@ -312,6 +314,12 @@ afterTest: async function (test: any, context: any) {
             console.error(`❌ Failed to save screenshot to ${filepath}:`, err);
         }
     }
+},
+
+afterSession: function () {
+    const tmpProfile = path.resolve(__dirname, 'tmpProfile');
+    fs.rmSync(tmpProfile, { recursive: true, force: true });
+    console.log('🧹 Удалена временная директория профиля Chrome');
 }
 
 
