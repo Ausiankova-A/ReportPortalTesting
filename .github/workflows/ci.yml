@@ -34,7 +34,7 @@ jobs:
           echo "$ENV_FILE_CONTENT" | base64 -d > .env
 
       - name: Run tests
-        run: npm run test
+        run: npm run test-mocha
 
       - name: Publish JUnit test results
         uses: mikepenz/action-junit-report@v3
