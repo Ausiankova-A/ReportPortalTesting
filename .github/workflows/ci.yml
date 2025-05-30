@@ -13,6 +13,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      checks: write
+      contents: read
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -43,6 +47,8 @@ jobs:
         uses: mikepenz/action-junit-report@v3
         with:
           report_paths: 'reports/**/*.xml'
+          check_name: ''
+          fail_on_failure: true
 
       - name: Show test summary
         run: echo "Tests completed. Review output above."
@@ -53,3 +59,4 @@ jobs:
         with:
           name: error-screenshots
           path: ./errorShots/
+          if-no-files-found: ignore

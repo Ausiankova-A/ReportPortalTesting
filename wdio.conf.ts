@@ -3,7 +3,6 @@ import { browser } from '@wdio/globals';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
-import Video from 'wdio-video-reporter';
 
 dotenv.config();
 
@@ -53,7 +52,7 @@ capabilities: [{
 
     reporters: [
   ['junit', {
-    outputDir: './reports/junit', // <= важно
+    outputDir: './reports/junit', 
     outputFileFormat: function (options) {
       return `results-${options.cid}.xml`;
     }
