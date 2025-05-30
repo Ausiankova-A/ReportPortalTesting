@@ -18,13 +18,12 @@ export const getPageFactory = () => {
 };
 
 export const mochaHooks = {
-  // beforeAll: async function () {
-  //   await loginSetupWDIO();
-  // },
+  beforeAll: async function () {
+    await loginSetupWDIO();
+  },
 
   beforeEach: async function (this: Mocha.Context) {
     // await browser.url(process.env.REPORT_PORTAL_URL || '');
-    await loginSetupWDIO();
     const locatorAdapter = new LocatorAdapter();
     pageFactory = new PageFactory(browser, locatorAdapter);
     this.pageFactory = pageFactory;
