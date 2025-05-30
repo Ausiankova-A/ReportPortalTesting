@@ -19,7 +19,7 @@ before(async function () {
 
 beforeEach(async function () {
   logger.info('зашли в бефор ич');
-  browser = await chromium.launch({ headless: false });
+  browser = await chromium.launch({ headless: true });
   logger.info('открыли браузер');
   const storageState = 'state.json';
   context = await browser.newContext({ storageState });
