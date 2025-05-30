@@ -3,7 +3,6 @@ import { LocatorAdapter } from '@core/configuration/LocatorAdapter';
 import { expect } from '@playwright/test';
 import { logger } from '@core/utils/logger';
 import dotenv from 'dotenv';
-import { browser } from '@wdio/globals';
 
 dotenv.config();
 
