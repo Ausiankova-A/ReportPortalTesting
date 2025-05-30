@@ -42,11 +42,14 @@ export const config: WebdriverIO.Config = {
 capabilities: [{
         browserName: 'chrome',
         'goog:chromeOptions': {
-        args: ['--window-size=1920,1080',
+        args: ['--headless=new',
+            '--window-size=1920,1080',
     '--no-sandbox',
     '--disable-dev-shm-usage']
     }
     }],
+
+    maxInstances: 1,
 // SAUCE_LABS
 // capabilities: [{
 //     browserName: 'chrome',
@@ -76,7 +79,7 @@ capabilities: [{
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 1,
+    
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
