@@ -3,7 +3,7 @@ import { IApiClient, IApiResponse } from '@core/api/interfaces/IApiClient';
 import { logRequest, logResponse } from 'core/utils/loggerAPI';
 
 export class AxiosClient implements IApiClient {
-  private client: AxiosInstance;
+  private readonly client: AxiosInstance;
 
   constructor(baseURL: string, token?: string) {
     this.client = axios.create({

@@ -3,9 +3,9 @@ import { $, $$ } from '@wdio/globals';
 type Framework = 'playwright' | 'wdio';
 
 export class LocatorAdapter {
-    private framework: Framework;
+    private readonly framework: Framework;
 
-    constructor(private page?: any) {
+    constructor(private readonly page?: any) {
         const fw = process.env.TEST_FRAMEWORK?.toLowerCase();
         if (fw === 'playwright' || fw === 'wdio') {
             this.framework = fw;
