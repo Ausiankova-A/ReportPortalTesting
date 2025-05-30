@@ -40,3 +40,10 @@ jobs:
 
       - name: Show test summary
         run: echo "Tests completed. Review report above."
+
+      - name: Upload error screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: error-screenshots
+          path: ./errorShots/
