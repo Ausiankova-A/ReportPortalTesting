@@ -1,6 +1,9 @@
 import type { Browser } from 'webdriverio';
 import { browser } from '@wdio/globals';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
+import Video from 'wdio-video-reporter';
 
 dotenv.config();
 
@@ -39,9 +42,14 @@ export const config: WebdriverIO.Config = {
 capabilities: [{
         browserName: 'chrome',
         'goog:chromeOptions': {
-        args: ['--window-size=1920,1080']
+        args: ['--headless=new',
+            '--window-size=1920,1080',
+    '--no-sandbox',
+    '--disable-dev-shm-usage']
     }
     }],
+
+    maxInstances: 1,
 // SAUCE_LABS
 // capabilities: [{
 //     browserName: 'chrome',
@@ -71,7 +79,7 @@ capabilities: [{
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 2,
+    
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -148,7 +156,6 @@ capabilities: [{
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
 
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
@@ -252,16 +259,67 @@ capabilities: [{
      * @param {boolean} result.passed    true if test has passed, otherwise false
      * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    // afterTest: function(test, context, { error, result, duration, passed, retries }) {
-    // },
-    afterTest: async function (test: any, { error }: any) {
-    if (error) {
+    
+// onPrepare: function () {
+//     const fs = require('fs');
+//     const path = require('path');
+//     const dir = path.resolve('./errorShots');
+//     if (!fs.existsSync(dir)) {
+//         fs.mkdirSync(dir, { recursive: true });
+//     }
+// },
+//     afterTest: async function (test: any, { error }: any) {
+//     if (error) {
+//         const fs = require('fs');
+//         const path = require('path');
+//         const dir = path.resolve('./errorShots');
+
+//         if (!fs.existsSync(dir)) {
+//             fs.mkdirSync(dir, { recursive: true });
+//         }
+
+//         const timestamp = new Date().toISOString().replace(/:/g, '-');
+//         const filepath = path.join(dir, `${test.title}_${timestamp}.png`);
+//         await browser.saveScreenshot(filepath);
+//         console.log(`Screenshot saved to ${filepath}`);
+//     }
+// },
+
+afterTest: async function (test: any, context: any) {
+    if (context.error) {
+        const fs = require('fs');
+        const path = require('path');
+
+        const dirPath = path.resolve('./errorShots');
+
+        if (!fs.existsSync(dirPath)) {
+            try {
+                fs.mkdirSync(dirPath, { recursive: true });
+                console.log(`🗂 Created missing directory: ${dirPath}`);
+            } catch (e) {
+                console.error(`❌ Failed to create directory: ${dirPath}`, e);
+                return;
+            }
+        }
+
         const timestamp = new Date().toISOString().replace(/:/g, '-');
-        const filepath = `./errorShots/${test.title}_${timestamp}.png`;
-        await browser.saveScreenshot(filepath);
-        console.log(`Screenshot saved to ${filepath}`);
+        const filename = `${test.title.replace(/\s+/g, '_')}_${timestamp}.png`;
+        const filepath = path.join(dirPath, filename);
+
+        try {
+            await browser.saveScreenshot(filepath);
+            console.log(`✅ Screenshot saved: ${filepath}`);
+        } catch (err) {
+            console.error(`❌ Failed to save screenshot to ${filepath}:`, err);
+        }
     }
 },
+
+afterSession: function () {
+    const tmpProfile = path.resolve(__dirname, 'tmpProfile');
+    fs.rmSync(tmpProfile, { recursive: true, force: true });
+    console.log('🧹 Удалена временная директория профиля Chrome');
+}
 
 
     /**

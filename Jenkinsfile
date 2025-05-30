@@ -3,36 +3,32 @@ pipeline {
 
     triggers {
         cron('H 10 * * *') 
-        pollSCM('* * * * *') 
-    }
-
-    tools {
-        nodejs "NodeJS 20"
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master',
+                git branch: 'main',
                     url: 'https://github.com/Ausiankova-A/ReportPortalTesting.git'
             }
         }
 
         stage('Install') {
             steps {
-                sh 'npm install'
+                bat 'node -v && npm -v'
+                bat 'npm install'
             }
         }
         stage('Prepare env') {
             steps {
                 withCredentials([file(credentialsId: 'AA', variable: 'ENV_FILE')]) {
-                    sh 'cp "$ENV_FILE" .env'
+                    bat 'copy "%ENV_FILE%" .env'
                 }
             }
         }
         stage('Test') {
             steps {
-                sh 'npm run test-wdio'
+                bat 'npm run test-wdio CI'
             }
         }
 

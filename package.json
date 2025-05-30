@@ -12,6 +12,7 @@
     "lint": "eslint . --ext .ts,.tsx",
     "test-cucumber": "cross-env TEST_FRAMEWORK=playwright cucumber-js --config cucumber.config.js",
     "test-wdio": "cross-env TEST_FRAMEWORK=wdio wdio run wdio.conf.ts",
+    "test-wdio CI": "cross-env TEST_FRAMEWORK=wdio wdio run wdio.conf.ts --workers 1",
     "api": "npx playwright test --project=api"
   },
   "repository": {
@@ -49,7 +50,8 @@
     "prettier": "^3.5.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "wdio-video-reporter": "^6.1.1"
   },
   "dependencies": {
     "axios": "^1.9.0",

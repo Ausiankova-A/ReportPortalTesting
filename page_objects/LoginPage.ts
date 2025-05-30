@@ -3,6 +3,7 @@ import { LocatorAdapter } from '@core/configuration/LocatorAdapter';
 import { expect } from '@playwright/test';
 import { logger } from '@core/utils/logger';
 import dotenv from 'dotenv';
+import { browser } from '@wdio/globals';
 
 dotenv.config();
 
@@ -24,7 +25,7 @@ export class LoginPage extends BasePage {
         return this.locatorAdapter.getLocator('input[name=password]');
     }
     get loginButton() {
-        return this.locatorAdapter.getLocator('button.bigButton__big-button--BmG4Q');
+        return this.locatorAdapter.getLocator('button[type=submit]');
     }
 
     async login() {
@@ -44,10 +45,22 @@ export class LoginPage extends BasePage {
             throw new Error('Environment variable LOGIN and PASSWORD is not set');
         }
 
-        await this.loginForm.waitForDisplayed({ timeout: 15000 });
+        logger.info('зашли в функцию');
+
+        await this.loginForm.waitForDisplayed({ timeout: 30000 });
+        logger.info('дождались пока загрузится видимость');
+        await this.loginField.waitForEnabled({ timeout: 15000 });
+        logger.info('дождались пока можно взаиможействовать');
+        logger.info('Attempting to input login');
         await this.loginField.setValue(process.env.LOGIN);
+        logger.info('Login entered');
+        await this.loginField.waitForEnabled({ timeout: 15000 });
+        logger.info('Attempting to input password');
         await this.passwordField.setValue(process.env.PASSWORD);
+        logger.info('Password entered');
+        await browser.saveScreenshot('before.png');
         await this.loginButton.click();
+        await browser.saveScreenshot('after.png');
         await this.loginForm.waitForDisplayed({ reverse: true, timeout: 15000 });
 
         logger.info(`User ${process.env.LOGIN} is logged in (WDIO)`);

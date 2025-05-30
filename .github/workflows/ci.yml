@@ -1,12 +1,13 @@
 name: Basic CI
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 10 * * *'  # каждый день в 10:00 UTC
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,18 +15,36 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: Check TypeScript compilation
-        run: npx tsc --noEmit
+      - name: Prepare .env file
+        env:
+          ENV_FILE_CONTENT: ${{ secrets.ENV_FILE_BASE64 }}
+        run: |
+          echo "$ENV_FILE_CONTENT" | base64 -d > .env
 
-      - name: Lint check
-        run: npm run lint
+      - name: Run tests
+        run: npm run test-wdio CI
+
+      - name: Publish JUnit test results
+        uses: mikepenz/action-junit-report@v3
+        with:
+          report_paths: 'reports/**/*.xml'
+
+      - name: Show test summary
+        run: echo "Tests completed. Review report above."
+
+      - name: Upload error screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: error-screenshots
+          path: ./errorShots/
