@@ -23,7 +23,7 @@ export const mochaHooks = {
   },
 
   beforeEach: async function (this: Mocha.Context) {
-    // await browser.url(process.env.REPORT_PORTAL_URL || '');
+    await browser.url(process.env.REPORT_PORTAL_URL || '');
     const locatorAdapter = new LocatorAdapter();
     pageFactory = new PageFactory(browser, locatorAdapter);
     this.pageFactory = pageFactory;

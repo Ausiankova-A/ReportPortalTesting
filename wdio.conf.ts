@@ -3,7 +3,6 @@ import { browser } from '@wdio/globals';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
-import Video from 'wdio-video-reporter';
 
 dotenv.config();
 
@@ -50,6 +49,15 @@ capabilities: [{
     }],
 
     maxInstances: 1,
+
+    reporters: [
+  ['junit', {
+    outputDir: './reports/junit', 
+    outputFileFormat: function (options) {
+      return `results-${options.cid}.xml`;
+    }
+  }]
+],
 // SAUCE_LABS
 // capabilities: [{
 //     browserName: 'chrome',

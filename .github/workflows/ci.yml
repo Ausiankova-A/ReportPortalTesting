@@ -13,9 +13,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      checks: write
+      contents: read
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -25,6 +31,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install Playwright browsers
+        run: npx playwright install
+
       - name: Prepare .env file
         env:
           ENV_FILE_CONTENT: ${{ secrets.ENV_FILE_BASE64 }}
@@ -32,15 +41,17 @@ jobs:
           echo "$ENV_FILE_CONTENT" | base64 -d > .env
 
       - name: Run tests
-        run: npm run test-wdio CI
+        run: npm run test-mocha-ci
 
       - name: Publish JUnit test results
         uses: mikepenz/action-junit-report@v3
         with:
           report_paths: 'reports/**/*.xml'
+          check_name: ''
+          fail_on_failure: true
 
       - name: Show test summary
-        run: echo "Tests completed. Review report above."
+        run: echo "Tests completed. Review output above."
 
       - name: Upload error screenshots
         if: always()
@@ -48,3 +59,4 @@ jobs:
         with:
           name: error-screenshots
           path: ./errorShots/
+          if-no-files-found: ignore

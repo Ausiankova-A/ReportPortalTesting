@@ -18,7 +18,7 @@ before(async function () {
 });
 
 beforeEach(async function () {
-  browser = await chromium.launch({ headless: false });
+  browser = await chromium.launch({ headless: true });
   const storageState = 'state.json';
   context = await browser.newContext({ storageState });
   page = await context.newPage();

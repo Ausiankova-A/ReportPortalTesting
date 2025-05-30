@@ -2,14 +2,13 @@ pipeline {
     agent any
 
     triggers {
-        cron('H 10 * * *') 
+        cron('H 10 * * *')
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/Ausiankova-A/ReportPortalTesting.git'
+                checkout scm
             }
         }
 
@@ -19,6 +18,7 @@ pipeline {
                 bat 'npm install'
             }
         }
+
         stage('Prepare env') {
             steps {
                 withCredentials([file(credentialsId: 'AA', variable: 'ENV_FILE')]) {
@@ -26,6 +26,7 @@ pipeline {
                 }
             }
         }
+
         stage('Test') {
             steps {
                 bat 'npm run test-wdio CI'
@@ -34,7 +35,7 @@ pipeline {
 
         stage('Publish Results') {
             steps {
-                junit 'reports/**/*.xml'
+                junit testResults: 'reports/**/*.xml', allowEmptyResults: true
             }
         }
     }
