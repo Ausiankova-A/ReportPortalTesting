@@ -7,7 +7,7 @@ pipeline {
 
     stage('Checkout') {
     steps {
-        git url: 'https://github.com/Ausiankova-A/ReportPortalTesting.git', branch: env.BRANCH_NAME
+        checkout scm
     }
 }
 
