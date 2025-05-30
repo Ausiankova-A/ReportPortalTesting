@@ -34,7 +34,7 @@ pipeline {
 
         stage('Publish Results') {
             steps {
-                junit 'reports/**/*.xml', allowEmptyResults: true
+                junit testResults: 'reports/**/*.xml', allowEmptyResults: true
             }
         }
     }
