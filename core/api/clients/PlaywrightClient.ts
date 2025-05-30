@@ -8,7 +8,7 @@ const useProxy = process.env.USE_PROXY === 'true';
 const proxyUrl = process.env.PROXY_URL;
 
 export class PlaywrightClient implements IApiClient {
-  private requestContext: Promise<APIRequestContext>;
+  private readonly requestContext: Promise<APIRequestContext>;
 
   constructor(baseURL: string, token?: string) {
     this.requestContext = request.newContext({

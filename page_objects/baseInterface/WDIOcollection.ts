@@ -1,8 +1,8 @@
 export class WDIOCollection<T> {
     constructor(
-        private elements: Promise<WebdriverIO.ElementArray>,
-        private itemClass: new (el: any, adapter: any) => T,
-        private adapter: any
+        private readonly elements: Promise<WebdriverIO.ElementArray>,
+        private readonly itemClass: new (el: any, adapter: any) => T,
+        private readonly adapter: any
     ) {}
 
     async find(filterFn: (el: WebdriverIO.Element) => Promise<boolean>): Promise<T | undefined> {
