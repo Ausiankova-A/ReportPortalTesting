@@ -2,16 +2,15 @@ pipeline {
     agent any
 
     triggers {
-        cron('H 10 * * *') 
+        cron('H 10 * * *')
     }
 
-    stage('Checkout') {
-    steps {
-        checkout scm
-    }
-}
-
-}
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
 
         stage('Install') {
             steps {
@@ -19,6 +18,7 @@ pipeline {
                 bat 'npm install'
             }
         }
+
         stage('Prepare env') {
             steps {
                 withCredentials([file(credentialsId: 'AA', variable: 'ENV_FILE')]) {
@@ -26,6 +26,7 @@ pipeline {
                 }
             }
         }
+
         stage('Test') {
             steps {
                 bat 'npm run test-wdio CI'
