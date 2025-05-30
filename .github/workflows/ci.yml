@@ -36,6 +36,11 @@ jobs:
       - name: Run tests
         run: npm run test-wdio CI
 
+      - name: Publish JUnit test results
+        uses: mikepenz/action-junit-report@v3
+        with:
+          report_paths: 'reports/**/*.xml'
+
       - name: Show test summary
         run: echo "Tests completed. Review output above."
 

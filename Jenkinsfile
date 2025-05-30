@@ -5,11 +5,12 @@ pipeline {
         cron('H 10 * * *') 
     }
 
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
+    stage('Checkout') {
+    steps {
+        git url: 'https://github.com/Ausiankova-A/ReportPortalTesting.git', branch: env.BRANCH_NAME
+    }
+}
+
 }
 
         stage('Install') {
