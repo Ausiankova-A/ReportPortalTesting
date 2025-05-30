@@ -18,10 +18,14 @@ before(async function () {
 });
 
 beforeEach(async function () {
+  logger.info('зашли в бефор ич');
   browser = await chromium.launch({ headless: false });
+  logger.info('открыли браузер');
   const storageState = 'state.json';
   context = await browser.newContext({ storageState });
+  logger.info('подгрузили контекст');
   page = await context.newPage();
+  logger.info('открыли новую страницу');
   const locatorAdapter = new LocatorAdapter(page);
   pageFactory = new PageFactory(page, locatorAdapter); 
   if (!process.env.REPORT_PORTAL_URL) {
