@@ -1,5 +1,20 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const RPconfig = {
+  apiKey: 'Test_bWPAp2f1Tyu6WOAXVKUrbjXEG3JAbaSU0UWr9VvZM7ASCL_BJkZI7vH3mdSpRwYp',
+  endpoint: 'https://reportportal.epam.com/api/v1',
+  project: 'anastasiya_ausiankova_personal',
+  launch: 'Playwright test cases',
+  attributes: [
+    { key: 'includeTestSteps', value: 'true' },
+    { key: 'extendTestDescriptionWithLastError', value: 'true' },
+    { key: 'uploadVideo', value: 'true' },
+    { key: 'uploadTrace', value: 'true' },
+  ],
+  description: 'Running playwright test cases',
+};
+
+
 export default defineConfig({
   testDir: './tests/playwrightTests',
   fullyParallel: false,
@@ -10,6 +25,7 @@ export default defineConfig({
     ['list'], 
     ['json', { outputFile: 'results.json' }], 
     ['allure-playwright'],
+    ['@reportportal/agent-js-playwright', RPconfig],
   ],
   use: {
     trace: 'on',

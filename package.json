@@ -7,7 +7,7 @@
     "preui": "ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
     "ui": "npx playwright test --project=playwrightTests --ui",
     "pretest": "cross-env TEST_FRAMEWORK=playwright ts-node -r tsconfig-paths/register core/configuration/login-setup.ts",
-    "test": "cross-env TEST_FRAMEWORK=playwright npx playwright test",
+    "test": "cross-env TEST_FRAMEWORK=playwright npx playwright test --project=playwrightTests",
     "test-mocha": "cross-env TEST_FRAMEWORK=playwright cross-env MOCHA_THREADS=2 npx mocha --require ts-node/register --require tsconfig-paths/register --timeout 30000 --parallel --jobs 2 --reporter mocha-junit-reporter \"tests/mochaTests/*.spec.ts\"",
     "test-mocha-ci": "cross-env TEST_FRAMEWORK=playwright npx mocha --require ts-node/register --require tsconfig-paths/register --timeout 30000 --reporter mocha-junit-reporter --reporter-options mochaFile=reports/junit/results-[hash].xml \"tests/mochaTests/**/*.spec.ts\"",
     "lint": "eslint . --ext .ts,.tsx",
@@ -28,6 +28,7 @@
   "devDependencies": {
     "@cucumber/cucumber": "^11.2.0",
     "@playwright/test": "^1.51.1",
+    "@reportportal/agent-js-playwright": "^5.1.11",
     "@types/chai": "^5.2.1",
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.14.0",
