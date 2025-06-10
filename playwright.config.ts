@@ -1,7 +1,10 @@
 import { defineConfig, devices } from '@playwright/test';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 const RPconfig = {
-  apiKey: 'Test_bWPAp2f1Tyu6WOAXVKUrbjXEG3JAbaSU0UWr9VvZM7ASCL_BJkZI7vH3mdSpRwYp',
+  apiKey: process.env.RP_API_KEY,
   endpoint: 'https://reportportal.epam.com/api/v1',
   project: 'anastasiya_ausiankova_personal',
   launch: 'Playwright test cases',

@@ -1,11 +1,18 @@
 // @ts-ignore
 import fetch from 'node-fetch';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 export class TeamsNotifier {
   private webhookUrl: string;
 
   constructor(webhookUrl: string) {
-    this.webhookUrl = "https://epam.webhook.office.com/webhookb2/6054b5ab-7442-41ad-801a-bae0a7401b7c@b41b72d0-4e9f-4c26-8a69-f949f367c91d/IncomingWebhook/11d379815de0499c8031317ac44e4b20/cb518534-b3b6-455a-a5b5-d1899076c9aa/V2yl5a_5DMLkployo97BirkV6lGF_V2DdKyw_lwkZyfLo1";
+    const url = process.env.TEAMS_WEBHOOK_URL;
+    if (!url) {
+      throw new Error("TEAMS_WEBHOOK_URL is not defined in .env file");
+    }
+    this.webhookUrl = url;
   }
 
   async sendMessage(message: string) {
