@@ -3,6 +3,10 @@ import { loginSetup } from '@core/configuration/login-setup';
 import { PageFactory } from '@pages/PageFactory';
 import { logger } from '@core/utils/logger';
 import { LocatorAdapter } from '@core/configuration/LocatorAdapter';
+import { TeamsNotifier } from '@core/utils/teamsNotifier';
+
+const teamsWebhookUrl = process.env.TEAMS_WEBHOOK_URL || '';
+const notifier = new TeamsNotifier(teamsWebhookUrl);
 
 import dotenv from 'dotenv';
 
@@ -14,6 +18,7 @@ let page: Page;
 let pageFactory: PageFactory;
 
 before(async function () {
+  await notifier.sendMessage('🚀 Тестовый прогон начался');
   await loginSetup();
 });
 
@@ -44,6 +49,10 @@ afterEach(async function () {
     await browser.close(); 
     logger.info('Browser is closed');
   }
+});
+
+after(async function () {
+  await notifier.sendMessage('✅ Тестовый прогон завершён');
 });
 
 export function getPageFactory() {
