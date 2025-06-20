@@ -1,86 +1,86 @@
-name: Basic CI
+# name: Basic CI
 
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
-  schedule:
-    - cron: '0 10 * * *'  # каждый день в 10:00 UTC
-  workflow_dispatch:
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [main]
+#   schedule:
+#     - cron: '0 10 * * *'  # каждый день в 10:00 UTC
+#   workflow_dispatch:
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    permissions:
-      checks: write
-      contents: read
+#     permissions:
+#       checks: write
+#       contents: read
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+#         with:
+#           ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: '18'
 
-      - name: Install dependencies
-        run: npm install
+#       - name: Install dependencies
+#         run: npm install
 
-      - name: Install Playwright browsers
-        run: npx playwright install
+#       - name: Install Playwright browsers
+#         run: npx playwright install
 
-      - name: Prepare .env file
-        env:
-          ENV_FILE_CONTENT: ${{ secrets.ENV_FILE_BASE64 }}
-        run: |
-          echo "$ENV_FILE_CONTENT" | base64 -d > .env
+#       - name: Prepare .env file
+#         env:
+#           ENV_FILE_CONTENT: ${{ secrets.ENV_FILE_BASE64 }}
+#         run: |
+#           echo "$ENV_FILE_CONTENT" | base64 -d > .env
 
-      - name: Run tests
-        run: npm run test-mocha-ci
+#       - name: Run tests
+#         run: npm run test-mocha-ci
 
-      - name: Publish JUnit test results
-        uses: mikepenz/action-junit-report@v3
-        with:
-          report_paths: 'reports/**/*.xml'
-          check_name: ''
-          fail_on_failure: true
+#       - name: Publish JUnit test results
+#         uses: mikepenz/action-junit-report@v3
+#         with:
+#           report_paths: 'reports/**/*.xml'
+#           check_name: ''
+#           fail_on_failure: true
 
-      - name: Show test summary
-        run: echo "Tests completed. Review output above."
+#       - name: Show test summary
+#         run: echo "Tests completed. Review output above."
 
-      - name: Upload error screenshots
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: error-screenshots
-          path: ./errorShots/
-          if-no-files-found: ignore
+#       - name: Upload error screenshots
+#         if: always()
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: error-screenshots
+#           path: ./errorShots/
+#           if-no-files-found: ignore
 
-           # --- SONAR ANALYSIS ---
-      - name: Set up Java (SonarScanner needs it)
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+#            # --- SONAR ANALYSIS ---
+#       - name: Set up Java (SonarScanner needs it)
+#         uses: actions/setup-java@v3
+#         with:
+#           distribution: 'temurin'
+#           java-version: '17'
 
-      - name: Download SonarScanner
-        run: |
-          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-          unzip sonar-scanner.zip -d $HOME
-          echo "$HOME/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
+#       - name: Download SonarScanner
+#         run: |
+#           curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+#           unzip sonar-scanner.zip -d $HOME
+#           echo "$HOME/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
 
-      - name: Run SonarCloud Scan
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner \
-            -Dsonar.projectKey=Ausiankova-A_ReportPortalTesting \
-            -Dsonar.organization=ausiankova-a \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+#       - name: Run SonarCloud Scan
+#         env:
+#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#         run: |
+#           sonar-scanner \
+#             -Dsonar.projectKey=Ausiankova-A_ReportPortalTesting \
+#             -Dsonar.organization=ausiankova-a \
+#             -Dsonar.sources=. \
+#             -Dsonar.host.url=https://sonarcloud.io \
+#             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
